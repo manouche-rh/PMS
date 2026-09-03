@@ -160,9 +160,14 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
   border-radius:var(--r);font-size:14px}
 
 #sheet{display:none}
-.lab{width:var(--lw);height:var(--lh);padding:2.2mm 2.6mm;display:flex;flex-direction:column;
-  justify-content:space-between;color:#000;background:#fff;overflow:hidden;
+.lab{width:var(--lw);height:var(--lh);max-height:var(--lh);
+  box-sizing:border-box;padding:1.8mm 2.6mm;display:flex;flex-direction:column;
+  justify-content:flex-start;color:#000;background:#fff;overflow:hidden;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.lab .lname{flex:0 0 auto}
+.lab .lmid{flex:0 0 auto;margin-top:.8mm}
+.lab .lbc{flex:0 0 auto}
+.lab .lbot{flex:0 0 auto;margin-top:auto}
 .lab .lname{font-size:11.5pt;font-weight:800;line-height:1.03;letter-spacing:-.02em}
 .lab .lmid{display:flex;justify-content:space-between;align-items:flex-end;gap:2mm}
 .lab .lfab{font-size:7pt;line-height:1.25;font-variant-numeric:tabular-nums}
@@ -171,12 +176,15 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
 .lab .ldlc b{font-size:13pt;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
 .lab .lbc{line-height:0;margin:.6mm 0 .3mm}
 .lab .lbc svg{display:block}
-.lab .lbot{display:flex;justify-content:space-between;font-size:7pt;font-weight:700;
-  border-top:.4mm solid #000;padding-top:.8mm}
+.lab .lbot{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:7pt;font-weight:700;border-top:.4mm solid #000;padding-top:.7mm;
+  page-break-inside:avoid;break-inside:avoid}
 .lab .lcode{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;font-weight:600}
 
 @media print{
   @page{size:var(--lw) var(--lh);margin:0}
+  html,body{width:var(--lw)}
+  .lab{height:var(--lh) !important;max-height:var(--lh) !important}
   body{background:#fff;padding:0}
   header,nav,main,.bar{display:none !important}
   #sheet{display:block}
@@ -435,7 +443,7 @@ $("#print").onclick=()=>{
       <div class="lname">${esc(nm)}</div>
       <div class="lmid">
         <div class="lfab">${p.frz?"Congelé":"Fabriqué"} le ${dmy(now)}<br>à ${hm(now)}</div>
-        <div class="ldlc"><em>${p.j?"À CONSOMMER AVANT LE":"VENTE DU JOUR"}</em><b>${p.j?dmy(dlc):dmy(now)}</b></div>
+        <div class="ldlc"><em>${p.j?"À CONSOMMER AVANT":"VENTE DU JOUR"}</em><b>${p.j?dmy(dlc):dmy(now)}</b></div>
       </div>
       <div class="lbc">${c128svg(code,bw,tall?7:5)}</div>
       <div class="lbot"><span>${esc(p.t)}</span><span class="lcode">${code}</span><span>${esc(cook)}</span></div>
