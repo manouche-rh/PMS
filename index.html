@@ -161,23 +161,23 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
 
 #sheet{display:none}
 .lab{width:var(--lw);height:var(--lh);max-height:var(--lh);
-  box-sizing:border-box;padding:1.8mm 2.6mm;display:flex;flex-direction:column;
+  box-sizing:border-box;padding:1.3mm 2.2mm;display:flex;flex-direction:column;
   justify-content:flex-start;color:#000;background:#fff;overflow:hidden;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .lab .lname{flex:0 0 auto}
-.lab .lmid{flex:0 0 auto;margin-top:.8mm}
+.lab .lmid{flex:0 0 auto;margin-top:.5mm}
 .lab .lbc{flex:0 0 auto}
 .lab .lbot{flex:0 0 auto;margin-top:auto}
-.lab .lname{font-size:11.5pt;font-weight:800;line-height:1.03;letter-spacing:-.02em}
+.lab .lname{font-size:10pt;font-weight:800;line-height:1;letter-spacing:-.025em}
 .lab .lmid{display:flex;justify-content:space-between;align-items:flex-end;gap:2mm}
-.lab .lfab{font-size:7pt;line-height:1.25;font-variant-numeric:tabular-nums}
+.lab .lfab{font-size:6pt;line-height:1.15;font-variant-numeric:tabular-nums}
 .lab .ldlc{text-align:right;line-height:1}
-.lab .ldlc em{display:block;font-style:normal;font-size:6.5pt;letter-spacing:.04em}
-.lab .ldlc b{font-size:13pt;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.lab .lbc{line-height:0;margin:.6mm 0 .3mm}
+.lab .ldlc em{display:block;font-style:normal;font-size:5.5pt;letter-spacing:.03em}
+.lab .ldlc b{font-size:11pt;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.lab .lbc{line-height:0;margin:.5mm 0 .2mm}
 .lab .lbc svg{display:block}
 .lab .lbot{display:flex;justify-content:space-between;align-items:baseline;
-  font-size:7pt;font-weight:700;border-top:.4mm solid #000;padding-top:.7mm;
+  font-size:6pt;font-weight:700;border-top:.35mm solid #000;padding-top:.5mm;
   page-break-inside:avoid;break-inside:avoid}
 .lab .lcode{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;font-weight:600}
 
@@ -320,7 +320,7 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
     <fieldset><legend>Format d'étiquette</legend>
       <div class="sz">
         <span>Largeur</span><input id="lw" type="number" value="62" inputmode="decimal"><span>mm</span>
-        <span>Hauteur</span><input id="lh" type="number" value="38" inputmode="decimal"><span>mm</span>
+        <span>Hauteur</span><input id="lh" type="number" value="29" inputmode="decimal"><span>mm</span>
       </div>
       <p class="hint" style="margin:12px 0 0">Brother DK-11209 : 62 × 29. DK-11208 : 62 × 38. À l'impression, marges « aucune » et sans en-têtes ni pieds de page.</p>
     </fieldset>
@@ -397,7 +397,7 @@ const SEED_ENC=[
   {id:"e6",site:"62 rue Rambuteau",n:"Bain-marie",min:63,max:95}
 ];
 
-let cat=[],cooks=[],cook="",queue=[],cools=[],lots=[],enc=[],temps=[],rec=[],fmt={w:62,h:38};
+let cat=[],cooks=[],cook="",queue=[],cools=[],lots=[],enc=[],temps=[],rec=[],fmt={w:62,h:29};
 
 const two=n=>String(n).padStart(2,"0");
 const dmy=d=>two(d.getDate())+"/"+two(d.getMonth()+1)+"/"+String(d.getFullYear()).slice(2);
@@ -445,7 +445,7 @@ $("#print").onclick=()=>{
         <div class="lfab">${p.frz?"Congelé":"Fabriqué"} le ${dmy(now)}<br>à ${hm(now)}</div>
         <div class="ldlc"><em>${p.j?"À CONSOMMER AVANT":"VENTE DU JOUR"}</em><b>${p.j?dmy(dlc):dmy(now)}</b></div>
       </div>
-      <div class="lbc">${c128svg(code,bw,tall?7:5)}</div>
+      <div class="lbc">${c128svg(code,bw,tall?6.5:5)}</div>
       <div class="lbot"><span>${esc(p.t)}</span><span class="lcode">${code}</span><span>${esc(cook)}</span></div>
     </div>`}).join("");
   save("mnch_lots",lots);
@@ -800,7 +800,7 @@ $("#cAdd").onclick=()=>{
   save("mnch_cooks",cooks);save("mnch_cook",cook);cookUI();
 };
 ["lw","lh"].forEach(k=>$("#"+k).onchange=e=>{
-  fmt[k==="lw"?"w":"h"]=Math.max(10,+e.target.value||10);save("mnch_fmt2",fmt)});
+  fmt[k==="lw"?"w":"h"]=Math.max(10,+e.target.value||10);save("mnch_fmt3",fmt)});
 
 /* ---------- export ---------- */
 function csv(rows){
@@ -860,7 +860,7 @@ document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
   enc=await load("mnch_enc_v2",SEED_ENC);
   temps=await load("mnch_temps",[]);
   rec=await load("mnch_rec",[]);
-  fmt=await load("mnch_fmt2",{w:62,h:38});
+  fmt=await load("mnch_fmt3",{w:62,h:29});
   $("#lw").value=fmt.w;$("#lh").value=fmt.h;
   document.documentElement.style.setProperty("--lw",fmt.w+"mm");
   document.documentElement.style.setProperty("--lh",fmt.h+"mm");
