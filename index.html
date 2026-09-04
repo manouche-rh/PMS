@@ -3,224 +3,412 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#1A1815">
-<title>PMS — Man'ouché</title>
+<meta name="theme-color" content="#14130E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>PMS HACCP — Man'ouché</title>
 <style>
 :root{
-  --stone:#E8E4D9; --stone-2:#DAD5C6; --ink:#1A1815; --ink-soft:#5C574D;
-  --zaatar:#4F5F2B; --zaatar-lo:#6E8040; --sumac:#A6321E; --froid:#1F5C8B;
-  --paper:#FBF9F4; --r:4px;
+  --bg:#EAE7DC;
+  --surface:#FDFCF8;
+  --surface-2:#F4F1E7;
+  --line:#DCD7C7;
+  --line-soft:#E7E3D6;
+  --ink:#14130E;
+  --ink-2:#4A463C;
+  --ink-3:#7C7768;
+  --zaatar:#4C5D2A;
+  --zaatar-lo:#6E8340;
+  --zaatar-bg:#EDF1E0;
+  --sumac:#A32E19;
+  --sumac-bg:#FBECE8;
+  --amber:#8A6A12;
+  --amber-bg:#FAF2DC;
+  --froid:#1D5B87;
+  --froid-bg:#E7F0F6;
+  --r:14px;
+  --r-sm:10px;
+  --sh:0 1px 2px rgba(20,19,14,.05), 0 4px 14px rgba(20,19,14,.05);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-body{background:var(--stone);color:var(--ink);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  font-size:16px;line-height:1.4;padding-bottom:96px;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
-input,select{font-family:inherit;font-size:16px}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  padding-bottom:110px;
+}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:16px;color:var(--ink)}
+input:focus-visible,button:focus-visible,select:focus-visible{
+  outline:2px solid var(--zaatar-lo);outline-offset:2px}
 
-header{position:sticky;top:0;z-index:20;background:var(--ink);color:var(--paper);
-  padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top))}
-.hrow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.brand{font-weight:800;letter-spacing:-.02em;font-size:19px}
-.today{font-variant-numeric:tabular-nums;opacity:.72;font-size:14px}
-.cook{margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.cook span{font-size:13px;opacity:.6}
-.chip{padding:7px 13px;border-radius:999px;font-weight:700;font-size:14px;
-  background:rgba(251,249,244,.12);color:var(--paper)}
-.chip.on{background:var(--paper);color:var(--ink)}
+/* ---------- en-tête ---------- */
+header{
+  position:sticky;top:0;z-index:30;background:var(--ink);color:#FDFCF8;
+  padding:14px 18px 16px;padding-top:calc(14px + env(safe-area-inset-top));
+}
+.back{font-size:30px;line-height:.7;font-weight:400;color:#FDFCF8;padding:0 12px 4px 0;
+  margin:-4px 0 0 -4px;opacity:.85}
+.back:active{opacity:.5}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;
+  margin-bottom:30px}
+.tile{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);box-shadow:var(--sh);padding:15px 15px 13px;min-height:104px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:transform .08s,box-shadow .15s}
+.tile:active{transform:scale(.975)}
+.tile .tt{font-weight:750;font-size:15.5px;letter-spacing:-.02em;line-height:1.2;padding-right:22px}
+.tile .ts{font-size:12.5px;color:var(--ink-3);margin-top:8px;line-height:1.35;font-weight:550}
+.tile .arw{position:absolute;top:14px;right:13px;color:var(--ink-3);font-size:19px;
+  line-height:1;opacity:.45}
+.tile.bad{border-color:#E4B5A8;background:var(--sumac-bg)}
+.tile.bad .ts{color:var(--sumac);font-weight:700}
+.tile.warn{border-color:#E3D2A0;background:var(--amber-bg)}
+.tile.warn .ts{color:var(--amber);font-weight:700}
+.tile .dot{position:absolute;top:13px;right:12px;min-width:22px;height:22px;border-radius:999px;
+  background:var(--sumac);color:#fff;font-size:12px;font-weight:800;display:flex;
+  align-items:center;justify-content:center;padding:0 6px}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:750;letter-spacing:-.025em;font-size:19px}
+.brand span{opacity:.45;font-weight:500}
+.today{font-variant-numeric:tabular-nums;opacity:.6;font-size:13px;text-align:right;line-height:1.25}
+.cook{margin-top:11px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.cook > span{font-size:12px;opacity:.45;letter-spacing:.02em;text-transform:uppercase;font-weight:600}
+.chip{
+  padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px;
+  background:rgba(253,252,248,.1);color:#FDFCF8;transition:background .15s}
+.chip.on{background:#FDFCF8;color:var(--ink)}
 
-nav{display:flex;overflow-x:auto;background:var(--ink);border-top:1px solid rgba(251,249,244,.14);
-  scrollbar-width:none}
+nav{display:flex;gap:4px;overflow-x:auto;background:var(--ink);
+  padding:12px 18px 0;scrollbar-width:none}
 nav::-webkit-scrollbar{display:none}
-nav button{flex:1 0 auto;padding:13px 15px;color:rgba(251,249,244,.5);font-weight:600;
-  font-size:14px;border-bottom:3px solid transparent;white-space:nowrap}
-nav button.on{color:var(--paper);border-bottom-color:var(--zaatar-lo)}
-nav button .bdg{display:inline-block;margin-left:6px;background:var(--sumac);color:#fff;
+nav button{
+  flex:0 0 auto;padding:9px 15px 11px;color:rgba(253,252,248,.5);font-weight:650;
+  font-size:14px;white-space:nowrap;border-radius:10px 10px 0 0;position:relative}
+nav button.on{color:var(--ink);background:var(--bg)}
+nav .bdg{
+  display:inline-block;margin-left:6px;background:var(--sumac);color:#fff;
   border-radius:999px;font-size:11px;font-weight:800;padding:1px 6px;vertical-align:1px}
+nav button.on .bdg{background:var(--sumac)}
 
-main{padding:16px}
-.panel{display:none}.panel.on{display:block}
-h2{font-size:14px;font-weight:700;color:var(--ink-soft);margin:0 0 10px}
-h2:not(:first-child){margin-top:26px}
-.hint{font-size:13px;color:var(--ink-soft);margin:0 0 14px;max-width:62ch}
-.empty{color:var(--ink-soft);font-size:14px;padding:20px 0;max-width:52ch}
+main{padding:20px 18px 0;max-width:760px;margin:0 auto}
+.panel{display:none;animation:in .2s ease}
+.panel.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
-.prod{position:relative;text-align:left;background:var(--paper);border:1.5px solid var(--stone-2);
-  border-radius:var(--r);padding:12px 12px 10px;min-height:82px;display:flex;flex-direction:column;
-  justify-content:space-between;transition:transform .07s}
+h2{font-size:12px;font-weight:750;color:var(--ink-3);margin:0 0 12px;
+  letter-spacing:.06em;text-transform:uppercase}
+h2:not(:first-child){margin-top:30px}
+.ccp{display:inline-block;font-size:11px;font-weight:750;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--zaatar);background:var(--zaatar-bg);
+  padding:5px 11px;border-radius:999px;margin:0 0 12px;border:1px solid #D3DCBC}
+.state{border-radius:var(--r);padding:16px 17px;margin-bottom:24px;box-shadow:var(--sh);
+  border:1px solid var(--line);background:var(--surface)}
+.state.ok{background:var(--zaatar-bg);border-color:#CBD7AC}
+.state.warn{background:var(--amber-bg);border-color:#E3D2A0}
+.state.bad{background:var(--sumac-bg);border-color:#E4B5A8}
+.state b{display:block;font-size:17px;font-weight:750;letter-spacing:-.02em;margin-bottom:5px}
+.state p{margin:0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.state ul{margin:10px 0 0;padding-left:19px;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.hint{font-size:13.5px;color:var(--ink-2);margin:0 0 18px;max-width:60ch;line-height:1.5}
+.empty{color:var(--ink-3);font-size:14px;padding:28px 4px;max-width:48ch;line-height:1.5}
+
+/* ---------- grille produits ---------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:9px}
+.prod{
+  position:relative;text-align:left;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);
+  padding:13px 13px 11px;min-height:88px;display:flex;flex-direction:column;
+  justify-content:space-between;transition:transform .08s,box-shadow .15s,border-color .15s}
 .prod:active{transform:scale(.97)}
-.prod.picked{border-color:var(--zaatar);background:#F0F3E4}
-.prod .n{font-weight:700;line-height:1.2;letter-spacing:-.01em;padding-right:26px}
-.prod .m{font-size:12px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-top:8px}
-.prod .hot{color:var(--sumac);font-weight:600}
-.prod .frz{color:var(--froid);font-weight:600}
-.prod .w{display:block;margin-top:5px;font-size:11px;line-height:1.25;font-weight:700;
-  color:var(--sumac);border-left:2px solid var(--sumac);padding-left:5px}
-.count{position:absolute;top:8px;right:8px;min-width:24px;height:24px;border-radius:999px;
+.prod.picked{border-color:var(--zaatar);background:var(--zaatar-bg);
+  box-shadow:0 0 0 1px var(--zaatar)}
+.prod{border-left-width:4px}
+.prod.fam-cru{border-left-color:#6E8340}
+.prod.fam-mezze{border-left-color:#B08A2A}
+.prod.fam-viande{border-left-color:#A32E19}
+.prod.fam-base{border-left-color:#8A6A55}
+.prod.fam-cond{border-left-color:#2F7A6A}
+.prod.fam-gel{border-left-color:#1D5B87}
+.prod.fam-frit{border-left-color:#C2661C}
+.prod .n{font-weight:700;line-height:1.2;letter-spacing:-.015em;padding-right:28px;font-size:15px}
+.prod .m{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+  margin-top:9px;font-weight:550}
+.prod .hot{color:var(--sumac);font-weight:700}
+.prod .frz{color:var(--froid);font-weight:700}
+.prod .w{display:block;margin-top:6px;font-size:11px;line-height:1.3;font-weight:700;
+  color:var(--sumac);background:var(--sumac-bg);padding:3px 6px;border-radius:6px}
+.count{
+  position:absolute;top:9px;right:9px;min-width:24px;height:24px;border-radius:999px;
   background:var(--zaatar);color:#fff;font-size:13px;font-weight:800;display:none;
-  align-items:center;justify-content:center;padding:0 6px;font-variant-numeric:tabular-nums}
+  align-items:center;justify-content:center;padding:0 7px;font-variant-numeric:tabular-nums}
 .prod.picked .count{display:flex}
 
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--paper);
-  padding:12px 16px calc(12px + env(safe-area-inset-bottom));display:none;gap:10px;align-items:center}
+/* ---------- barre d'impression ---------- */
+.bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--ink);color:#FDFCF8;
+  padding:13px 18px calc(13px + env(safe-area-inset-bottom));
+  display:none;gap:10px;align-items:center;box-shadow:0 -8px 28px rgba(20,19,14,.18)}
 .bar.on{display:flex}
-.bar .q{flex:1;font-size:14px;line-height:1.25}
-.bar .q b{display:block;font-size:17px}
-.bar .q small{opacity:.6}
-.btn{background:var(--zaatar-lo);color:#fff;font-weight:800;padding:14px 20px;border-radius:var(--r)}
-.btn.ghost{background:rgba(251,249,244,.14);font-weight:600;padding:14px 14px}
+.bar .q{flex:1;font-size:13px;line-height:1.3;min-width:0}
+.bar .q b{display:block;font-size:16px;font-weight:750}
+.bar .q small{opacity:.55;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{background:var(--zaatar-lo);color:#fff;font-weight:750;padding:13px 22px;
+  border-radius:var(--r-sm);letter-spacing:-.01em}
+.btn.ghost{background:rgba(253,252,248,.12);font-weight:600;padding:13px 15px}
 
-.kinds{display:flex;gap:6px;flex-wrap:wrap}
-.kinds button{flex:1;min-width:96px;padding:9px 8px;border-radius:var(--r);font-size:13px;
-  font-weight:700;background:var(--stone-2);color:var(--ink-soft);line-height:1.2}
-.kinds button.on{background:var(--ink);color:var(--paper)}
-.sitehead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
-  margin:22px 0 9px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
-.sitehead:first-child{margin-top:0}
-.sitehead span:first-child{font-weight:800;letter-spacing:-.01em;font-size:16px}
-.sitebdg{font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;
-  background:var(--stone-2);color:var(--ink-soft);white-space:nowrap}
-.sitebdg.due{background:var(--sumac);color:#fff}
-.scan{background:var(--paper);border:1.5px solid var(--stone-2);border-radius:var(--r);
-  padding:11px;margin-bottom:16px}
-.scan.rebut{border-color:var(--sumac);background:#FBEFEC}
-.scanrow{display:flex;gap:8px}
-.scanrow input{flex:1;min-width:0;border:1.5px solid var(--stone-2);border-radius:var(--r);
-  padding:12px;background:#fff;font-family:ui-monospace,Menlo,Consolas,monospace;
-  letter-spacing:.08em;text-transform:uppercase}
-.scanrow button{flex:0 0 auto;padding:12px 16px;border-radius:var(--r);font-weight:800;
-  background:var(--zaatar);color:#fff}
-.scan.rebut .scanrow button{background:var(--sumac)}
-.scanmsg{font-size:13px;color:var(--ink-soft);margin-top:8px;min-height:18px}
-.scanmsg.ok{color:var(--zaatar);font-weight:700}
-.scanmsg.err{color:var(--sumac);font-weight:700}
-.form{background:var(--paper);border:1.5px solid var(--stone-2);border-radius:var(--r);
-  padding:13px;margin-bottom:22px;display:flex;flex-direction:column;gap:8px}
-.form input{border:1.5px solid var(--stone-2);border-radius:var(--r);padding:11px;background:#fff;width:100%}
-.frow{display:flex;gap:8px}
-.frow input{flex:1;min-width:0}
-.photo{display:block;border:1.5px dashed var(--stone-2);border-radius:var(--r);padding:14px;
-  text-align:center;font-weight:700;color:var(--ink-soft);cursor:pointer}
-.photo.has{border-style:solid;border-color:var(--zaatar);color:var(--zaatar)}
-.thumb{width:100%;max-width:210px;border-radius:var(--r);border:1.5px solid var(--stone-2);
-  margin-top:9px;display:block}
-#viewer{position:fixed;inset:0;z-index:60;background:rgba(26,24,21,.94);display:none;
-  align-items:center;justify-content:center;padding:16px}
-#viewer.on{display:flex}
-#viewer img{max-width:100%;max-height:88vh;border-radius:var(--r)}
-#viewer button{position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;
-  background:var(--paper);color:var(--ink);font-weight:800;border-radius:999px;
-  width:42px;height:42px;font-size:20px}
-
-.card{background:var(--paper);border:1.5px solid var(--stone-2);border-radius:var(--r);
-  padding:13px;margin-bottom:8px}
-.card.bad{border-color:var(--sumac);background:#FBEFEC}
-.card.warn{border-color:#B8860B;background:#FAF4E4}
-.card .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.card .nm{font-weight:800;letter-spacing:-.01em}
-.card .meta{font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin-top:4px}
-.lotcode{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;
-  background:var(--stone-2);padding:1px 5px;border-radius:3px;color:var(--ink)}
+/* ---------- cartes ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);padding:14px 15px;margin-bottom:9px}
+.card.bad{border-color:#E4B5A8;background:var(--sumac-bg)}
+.card.warn{border-color:#E3D2A0;background:var(--amber-bg)}
+.card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .nm{font-weight:750;letter-spacing:-.015em;font-size:15.5px;line-height:1.25}
+.card .meta{font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+  margin-top:5px;line-height:1.45}
 .card .el{font-variant-numeric:tabular-nums;font-weight:800;font-size:19px;white-space:nowrap}
 .card .el.bad{color:var(--sumac)}
-.tag{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;
-  background:var(--stone-2);color:var(--ink);white-space:nowrap}
-.tag.bad{background:var(--sumac);color:#fff}
-.tag.warn{background:#B8860B;color:#fff}
-.acts{display:flex;gap:8px;margin-top:11px}
-.acts button{flex:1;padding:11px;border-radius:var(--r);font-weight:700;font-size:14px;
-  background:var(--stone-2);color:var(--ink)}
-.acts .fin{background:var(--zaatar);color:#fff}
-.acts .kill{background:var(--sumac);color:#fff}
-.acts input{flex:0 0 82px;border:1.5px solid var(--stone-2);border-radius:var(--r);
-  padding:11px 8px;text-align:center;font-weight:700;background:#fff;font-variant-numeric:tabular-nums}
-.log{margin:9px 0 0;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
-.log div{padding:3px 0;border-top:1px solid var(--stone-2)}
-.del{color:var(--sumac);font-weight:800;padding:4px 8px;font-size:18px;line-height:1}
-.done{opacity:.55}
+.tag{font-size:11px;font-weight:750;padding:4px 9px;border-radius:999px;
+  background:var(--surface-2);color:var(--ink-2);white-space:nowrap;border:1px solid var(--line-soft)}
+.tag.bad{background:var(--sumac);color:#fff;border-color:var(--sumac)}
+.tag.warn{background:var(--amber);color:#fff;border-color:var(--amber)}
+.tag.ok{background:var(--zaatar);color:#fff;border-color:var(--zaatar)}
+.lotcode{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.05em;
+  background:var(--surface-2);padding:2px 6px;border-radius:5px;color:var(--ink-2);font-size:11.5px}
+.acts{display:flex;gap:8px;margin-top:13px}
+.acts button{flex:1;padding:11px;border-radius:var(--r-sm);font-weight:700;font-size:14px;
+  background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);transition:filter .15s}
+.acts button:active{filter:brightness(.94)}
+.acts .fin{background:var(--zaatar);color:#fff;border-color:var(--zaatar)}
+.acts .kill{background:var(--sumac);color:#fff;border-color:var(--sumac)}
+.acts input{flex:0 0 84px;border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:11px 8px;text-align:center;font-weight:700;background:#fff;
+  font-variant-numeric:tabular-nums}
+.log{margin:10px 0 0;font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.log div{padding:4px 0;border-top:1px solid var(--line-soft)}
+.del{color:var(--sumac);font-weight:800;padding:4px 9px;font-size:19px;line-height:1;
+  border-radius:8px}
+.del:active{background:var(--sumac-bg)}
+.done{opacity:.6}
 
-.row{display:flex;gap:8px;align-items:center;background:var(--paper);border:1.5px solid var(--stone-2);
-  border-radius:var(--r);padding:9px 11px;margin-bottom:6px}
-.row .nm{flex:1;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row input,.row select{border:1px solid var(--stone-2);border-radius:var(--r);padding:7px 8px;background:#fff}
-.w-j{width:56px;text-align:center;font-variant-numeric:tabular-nums}
-.w-t{width:86px}.w-s{width:52px;text-align:center;font-variant-numeric:tabular-nums}
-.addrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-.addrow input,.addrow select{flex:1;min-width:120px;border:1.5px solid var(--stone-2);
-  border-radius:var(--r);padding:11px;background:#fff}
-.addrow button{background:var(--ink);color:var(--paper);font-weight:700;padding:11px 18px;border-radius:var(--r)}
-fieldset{border:1.5px solid var(--stone-2);border-radius:var(--r);margin:22px 0 0;padding:14px}
-legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
-.sz{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px}
-.sz input{width:76px;border:1.5px solid var(--stone-2);border-radius:var(--r);padding:9px;text-align:center}
-.exp{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.exp button{background:var(--ink);color:var(--paper);font-weight:700;padding:11px 14px;
-  border-radius:var(--r);font-size:14px}
+/* ---------- en-tête de site ---------- */
+.sitehead{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  margin:26px 0 11px;padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.sitehead:first-child{margin-top:0}
+.sitehead > span:first-child{font-weight:750;letter-spacing:-.02em;font-size:16px}
+.sitebdg{font-size:11px;font-weight:750;padding:3px 10px;border-radius:999px;
+  background:var(--surface-2);color:var(--ink-3);white-space:nowrap;border:1px solid var(--line)}
+.sitebdg.due{background:var(--sumac);color:#fff;border-color:var(--sumac)}
 
+/* ---------- scan ---------- */
+.scan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);padding:13px;margin-bottom:20px;transition:border-color .2s,background .2s}
+.scan.rebut{border-color:var(--sumac);background:var(--sumac-bg)}
+.scanrow{display:flex;gap:9px}
+.scanrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:13px;background:#fff;font-family:ui-monospace,Menlo,Consolas,monospace;
+  letter-spacing:.09em;text-transform:uppercase;font-size:15px}
+.scanrow button{flex:0 0 auto;padding:13px 18px;border-radius:var(--r-sm);font-weight:750;
+  background:var(--zaatar);color:#fff}
+.scan.rebut .scanrow button{background:var(--sumac)}
+.scanmsg{font-size:13px;color:var(--ink-3);margin-top:10px;min-height:19px;line-height:1.4}
+.scanmsg.ok{color:var(--zaatar);font-weight:700}
+.scanmsg.err{color:var(--sumac);font-weight:700}
+
+/* ---------- formulaires ---------- */
+.form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);padding:14px;margin-bottom:24px;display:flex;flex-direction:column;gap:9px}
+.form input{border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;
+  background:#fff;width:100%}
+.frow{display:flex;gap:9px}
+.frow input{flex:1;min-width:0}
+.kinds{display:flex;gap:6px;flex-wrap:wrap}
+.kinds button{flex:1;min-width:98px;padding:10px 8px;border-radius:var(--r-sm);font-size:13px;
+  font-weight:700;background:var(--surface-2);color:var(--ink-3);line-height:1.2;
+  border:1px solid var(--line)}
+.kinds button.on{background:var(--ink);color:#FDFCF8;border-color:var(--ink)}
+.photo{display:block;border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:15px;
+  text-align:center;font-weight:700;color:var(--ink-3);cursor:pointer;font-size:14px}
+.photo.has{border-style:solid;border-color:var(--zaatar);color:var(--zaatar);
+  background:var(--zaatar-bg)}
+.row{display:flex;gap:9px;align-items:center;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:7px}
+.row .nm{flex:1;font-weight:650;min-width:0;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;font-size:14.5px}
+.row .nm small{display:block;font-weight:500;font-size:12px;color:var(--ink-3)}
+.row input,.row select{border:1px solid var(--line);border-radius:8px;padding:8px;background:#fff}
+.w-j{width:58px;text-align:center;font-variant-numeric:tabular-nums}
+.w-t{width:88px}.w-s{width:54px;text-align:center;font-variant-numeric:tabular-nums}
+.addrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}
+.addrow input,.addrow select{flex:1;min-width:124px;border:1px solid var(--line);
+  border-radius:var(--r-sm);padding:12px;background:#fff}
+.addrow button{background:var(--ink);color:#FDFCF8;font-weight:700;padding:12px 20px;
+  border-radius:var(--r-sm)}
+fieldset{border:1px solid var(--line);border-radius:var(--r);margin:24px 0 0;padding:16px;
+  background:var(--surface)}
+legend{font-size:11px;font-weight:750;color:var(--ink-3);padding:0 8px;
+  letter-spacing:.06em;text-transform:uppercase}
+.sz{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:14px}
+.sz input{width:78px;border:1px solid var(--line);border-radius:var(--r-sm);padding:10px;
+  text-align:center}
+.exp{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.exp button{background:var(--ink);color:#FDFCF8;font-weight:700;padding:11px 15px;
+  border-radius:var(--r-sm);font-size:14px}
+.danger{background:var(--sumac) !important;color:#fff !important}
+
+/* ---------- bilan ---------- */
+.seg{display:flex;gap:4px;background:var(--surface-2);padding:4px;border-radius:var(--r-sm);
+  margin-bottom:20px;border:1px solid var(--line)}
+.seg button{flex:1;padding:10px 6px;border-radius:8px;font-weight:700;font-size:13.5px;
+  color:var(--ink-3)}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:9px;
+  margin-bottom:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--sh);padding:13px 14px}
+.kpi b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi span{font-size:11.5px;color:var(--ink-3);font-weight:600;display:block;margin-top:3px}
+.kpi.alert b{color:var(--sumac)}
+.statrow{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);
+  padding:12px 14px;margin-bottom:7px}
+.statrow .sr{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.statrow .nm{font-weight:700;font-size:14.5px;letter-spacing:-.01em}
+.statrow .num{font-variant-numeric:tabular-nums;font-weight:750;font-size:14px;white-space:nowrap}
+.statrow .num em{font-style:normal;color:var(--ink-3);font-weight:500}
+.bar2{display:flex;height:7px;border-radius:999px;overflow:hidden;margin-top:9px;
+  background:var(--surface-2)}
+.bar2 i{display:block;height:100%}
+.bar2 .u{background:var(--zaatar-lo)}
+.bar2 .j{background:var(--sumac)}
+.bar2 .s{background:var(--line)}
+.lgd{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-3);
+  margin:2px 0 16px;font-weight:600}
+.lgd span{display:flex;align-items:center;gap:5px}
+.lgd i{width:9px;height:9px;border-radius:3px;display:block}
+
+/* ---------- visionneuse ---------- */
+#viewer{position:fixed;inset:0;z-index:60;background:rgba(20,19,14,.95);display:none;
+  align-items:center;justify-content:center;padding:18px}
+#viewer.on{display:flex}
+#viewer img{max-width:100%;max-height:86vh;border-radius:var(--r-sm)}
+#viewer button{position:absolute;top:calc(18px + env(safe-area-inset-top));right:18px;
+  background:var(--surface);color:var(--ink);font-weight:800;border-radius:999px;
+  width:44px;height:44px;font-size:21px}
+
+/* ---------- étiquettes ---------- */
 #sheet{display:none}
-.lab{width:var(--lw);height:var(--lh);max-height:var(--lh);
-  box-sizing:border-box;padding:1.3mm 2.2mm;display:flex;flex-direction:column;
-  justify-content:flex-start;color:#000;background:#fff;overflow:hidden;
+.lab{width:var(--lw);height:var(--lh);max-height:var(--lh);box-sizing:border-box;
+  padding:1.3mm 2.2mm;display:flex;flex-direction:column;justify-content:flex-start;
+  color:#000;background:#fff;overflow:hidden;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.lab .lname{flex:0 0 auto}
-.lab .lmid{flex:0 0 auto;margin-top:.5mm}
-.lab .lbc{flex:0 0 auto}
-.lab .lbot{flex:0 0 auto;margin-top:auto}
-.lab .lname{font-size:10pt;font-weight:800;line-height:1;letter-spacing:-.025em}
-.lab .lmid{display:flex;justify-content:space-between;align-items:flex-end;gap:2mm}
+.lab .lname{flex:0 0 auto;font-size:10pt;font-weight:800;line-height:1;letter-spacing:-.025em}
+.lab .lmid{flex:0 0 auto;margin-top:.5mm;display:flex;justify-content:space-between;
+  align-items:flex-end;gap:2mm}
 .lab .lfab{font-size:6pt;line-height:1.15;font-variant-numeric:tabular-nums}
 .lab .ldlc{text-align:right;line-height:1}
 .lab .ldlc em{display:block;font-style:normal;font-size:5.5pt;letter-spacing:.03em}
 .lab .ldlc b{font-size:11pt;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.lab .lbc{line-height:0;margin:.5mm 0 .2mm}
+.lab .lbc{flex:0 0 auto;line-height:0;margin:.5mm 0 .2mm}
 .lab .lbc svg{display:block}
-.lab .lbot{display:flex;justify-content:space-between;align-items:baseline;
-  font-size:6pt;font-weight:700;border-top:.35mm solid #000;padding-top:.5mm;
-  page-break-inside:avoid;break-inside:avoid}
+.lab .lbot{flex:0 0 auto;margin-top:auto;display:flex;justify-content:space-between;
+  align-items:baseline;font-size:6pt;font-weight:700;border-top:.35mm solid #000;
+  padding-top:.5mm}
 .lab .lcode{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;font-weight:600}
 
 @media print{
   @page{size:var(--lw) var(--lh);margin:0}
-  html,body{width:var(--lw)}
-  .lab{height:var(--lh) !important;max-height:var(--lh) !important}
-  body{background:#fff;padding:0}
-  header,nav,main,.bar{display:none !important}
+  html,body{width:var(--lw);background:#fff;padding:0}
+  header,nav,main,.bar,#viewer{display:none !important}
   #sheet{display:block}
-  .lab{page-break-after:always;break-after:page}
+  .lab{height:var(--lh) !important;max-height:var(--lh) !important;
+    page-break-after:always;break-after:page}
   .lab:last-child{page-break-after:auto;break-after:auto}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="hrow">
-    <div class="brand">Man'ouché — PMS</div>
+    <button id="back" class="back" aria-label="Retour" hidden>‹</button>
+    <div class="brand" id="hTitle">Man'ouché <span>PMS HACCP</span></div>
     <div class="today" id="today"></div>
   </div>
   <div class="cook" id="cooks"></div>
 </header>
 
-<nav id="nav">
-  <button class="on" data-p="lab">Étiquettes</button>
-  <button data-p="rec">Réception</button>
-  <button data-p="stk">Stock<span class="bdg" id="bStk" style="display:none">0</span></button>
-  <button data-p="tmp">Températures<span class="bdg" id="bTmp" style="display:none">0</span></button>
-  <button data-p="cool">Refroidissement</button>
-  <button data-p="set">Réglages</button>
-</nav>
-
 <main>
-  <section class="panel on" id="p-lab">
-    <p class="hint">Touche un produit pour l'ajouter à la file, plusieurs fois pour plusieurs bacs. À l'impression, chaque étiquette est aussi enregistrée dans le stock.</p>
+  <section class="panel on" id="p-dash">
+    <div id="dashState"></div>
+    <div class="tiles" id="tiles"></div>
+    <h2>Points de maîtrise du jour</h2>
+    <div id="dashCcp"></div>
+    <h2>Activité</h2>
+    <div id="dashAct"></div>
+  </section>
+
+  <section class="panel" id="p-lab">
+    <p class="ccp">Traçabilité des produits fabriqués — DLC secondaires</p><p class="hint">Touche un produit pour l'ajouter à la file, plusieurs fois pour plusieurs bacs. Chaque étiquette imprimée entre automatiquement en stock.</p>
     <div class="grid" id="grid"></div>
   </section>
 
+  <section class="panel" id="p-stk">
+    <div class="scan" id="scanBox">
+      <div class="scanrow">
+        <input id="scanIn" placeholder="Scanner un bac vide" autocomplete="off"
+               autocapitalize="characters" spellcheck="false">
+        <button id="scanMode" data-mode="out">Écoulé</button>
+      </div>
+      <div class="scanmsg" id="scanMsg">Douchette prête. Scanne l'étiquette d'un bac terminé.</div>
+    </div>
+    <h2>En stock</h2>
+    <div id="stkList"></div>
+    <h2>Sorties récentes</h2>
+    <div id="stkDone"></div>
+  </section>
+
+  <section class="panel" id="p-bil">
+    <div class="seg" id="seg">
+      <button class="on" data-d="1">Aujourd'hui</button>
+      <button data-d="7">7 jours</button>
+      <button data-d="30">30 jours</button>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <h2>Relevé par produit</h2>
+    <div class="seg" id="segUnit">
+      <button class="on" data-m="q">En quantité</button>
+      <button data-m="b">En nombre de bacs</button>
+    </div>
+    <div class="lgd">
+      <span><i style="background:var(--zaatar-lo)"></i>Écoulé</span>
+      <span><i style="background:var(--sumac)"></i>Jeté</span>
+      <span><i style="background:var(--line)"></i>Encore en stock</span>
+    </div>
+    <div id="statList"></div>
+  </section>
+
+  <section class="panel" id="p-tmp">
+    <p class="ccp">Surveillance des enceintes — BPH 3.2</p><p class="hint">Un relevé à l'ouverture, un à la fermeture, pour chaque enceinte. Hors plage, la fiche passe en rouge et l'écart doit être traité.</p>
+    <div id="tmpList"></div>
+    <h2>Relevés récents</h2>
+    <div id="tmpLog"></div>
+  </section>
+
+  <section class="panel" id="p-cool">
+    <p class="ccp">CCP 2 — Refroidissement rapide</p><p class="hint">Limite critique : de +63 °C à ≤ +10 °C en moins de 2 h. Bac à 3 cm d'épaisseur dans un bain d'eau glacée, remue à 15 et 30 min.</p>
+    <div id="coolList"></div>
+    <div class="addrow">
+      <select id="coolPick"></select>
+      <button id="coolStart">Démarrer</button>
+    </div>
+    <h2>Historique</h2>
+    <div id="coolDone"></div>
+  </section>
+
   <section class="panel" id="p-rec">
-    <p class="hint">À chaque achat ou livraison. Pour les produits emballés, photographie l'étiquette : le lot y est. Pour la viande du boucher, il n'y a pas de lot — le numéro de facture et l'origine tiennent lieu de preuve.</p>
+    <p class="ccp">Traçabilité amont — art. 18 règl. CE 178/2002</p><p class="hint">À chaque achat ou livraison. Pour les produits emballés, photographie l'étiquette : le lot y est. Pour la viande du boucher, le numéro de facture et l'origine tiennent lieu de preuve.</p>
     <div class="form">
       <div class="kinds" id="rKind">
         <button class="on" data-k="animale">Viande, poisson, lait</button>
@@ -236,10 +424,10 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
       </div>
       <div class="frow">
         <input id="rLot" placeholder="N° de lot (si emballé)">
-        <input id="rOrig" placeholder="Origine (né/élevé/abattu)">
+        <input id="rOrig" placeholder="Origine">
       </div>
       <div class="frow">
-        <input id="rQty" placeholder="Quantité (ex. 12 kg)">
+        <input id="rQty" placeholder="Quantité">
         <input id="rTmp" type="number" step="0.1" inputmode="decimal" placeholder="°C à réception">
       </div>
       <label class="photo" id="rPhotoLbl">
@@ -247,62 +435,34 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
         <span id="rPhotoTxt">Photographier l'étiquette ou la facture</span>
       </label>
       <div class="frow">
-        <button class="btn" id="rAdd" style="flex:2">Enregistrer la réception</button>
-        <button class="btn kill" id="rRef" style="flex:1;background:var(--sumac)">Refuser</button>
+        <button class="btn" id="rAdd" style="flex:2">Enregistrer</button>
+        <button class="btn" id="rRef" style="flex:1;background:var(--sumac)">Refuser</button>
       </div>
     </div>
     <h2>Réceptions enregistrées</h2>
     <div id="recList"></div>
   </section>
 
-  <section class="panel" id="p-stk">
-    <p class="hint">Tout ce qui est étiqueté et pas encore sorti, classé par date de péremption. Le haut de liste part en premier.</p>
-    <div class="scan" id="scanBox">
-      <div class="scanrow">
-        <input id="scanIn" placeholder="Scanner un bac vide" autocomplete="off" autocapitalize="characters" spellcheck="false">
-        <button id="scanMode" data-mode="out">Écoulé</button>
-      </div>
-      <div class="scanmsg" id="scanMsg">Douchette prête. Scanne l'étiquette d'un bac terminé.</div>
-    </div>
-    <div id="stkList"></div>
-    <fieldset><legend>Sorties récentes</legend><div id="stkDone"></div></fieldset>
-  </section>
-
-  <section class="panel" id="p-tmp">
-    <p class="hint">Un relevé le matin à l'ouverture, un le soir à la fermeture, pour chaque enceinte.</p>
-    <div id="tmpList"></div>
-    <fieldset><legend>Relevés récents</legend><div id="tmpLog"></div></fieldset>
-  </section>
-
-  <section class="panel" id="p-cool">
-    <h2>Refroidissements en cours</h2>
-    <p class="hint">Objectif : sous 10 °C en moins de 2 h. Bac à 3 cm d'épaisseur dans un bain d'eau glacée, remue à 15 et 30 min.</p>
-    <div id="coolList"></div>
-    <div class="addrow">
-      <select id="coolPick"></select>
-      <button id="coolStart">Démarrer</button>
-    </div>
-    <fieldset><legend>Historique</legend><div id="coolDone"></div></fieldset>
-  </section>
-
   <section class="panel" id="p-set">
     <h2>Catalogue produits</h2>
-    <p class="hint">Durée en jours à partir de la fabrication. « Chaud » = passe par un refroidissement après cuisson.</p>
+    <p class="hint">Durée en jours à partir de la fabrication. Quantité = contenu standard d'un bac, utilisée pour le bilan matières. « Chaud » = passe par un refroidissement après cuisson.</p>
     <div id="list"></div>
     <div class="addrow">
       <input id="nName" placeholder="Nom du produit">
-      <input id="nDays" class="w-j" type="number" min="0" max="400" value="3" inputmode="numeric">
+      <input id="nDays" class="w-j" type="number" min="0" max="400" value="3" inputmode="numeric" aria-label="Jours">
+      <input id="nQty" class="w-j" type="number" min="0" step="0.1" value="2" inputmode="decimal" aria-label="Quantité">
+      <input id="nUnit" class="w-s" value="kg" aria-label="Unité">
       <button id="nAdd">Ajouter</button>
     </div>
 
-    <fieldset><legend>Enceintes froides et chaudes</legend>
+    <fieldset><legend>Enceintes</legend>
       <div id="encList"></div>
-      <div class="addrow" style="margin-top:8px">
-        <input id="eSite" list="encSites" placeholder="Site (ex. Laboratoire)">
+      <div class="addrow" style="margin-top:10px">
+        <input id="eSite" list="encSites" placeholder="Site">
         <datalist id="encSites"></datalist>
       </div>
-      <div class="addrow" style="margin-top:6px">
-        <input id="eName" placeholder="Nom (ex. Chambre froide)">
+      <div class="addrow" style="margin-top:7px">
+        <input id="eName" placeholder="Nom de l'enceinte">
         <input id="eMin" class="w-s" type="number" value="0" inputmode="numeric" aria-label="Mini">
         <input id="eMax" class="w-s" type="number" value="4" inputmode="numeric" aria-label="Maxi">
         <button id="eAdd">Ajouter</button>
@@ -311,10 +471,10 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
 
     <fieldset><legend>Cuisiniers</legend>
       <div class="addrow" style="margin:0">
-        <input id="nCook" placeholder="Initiales (ex. JK)" maxlength="4" style="text-transform:uppercase">
+        <input id="nCook" placeholder="Initiales" maxlength="4" style="text-transform:uppercase">
         <button id="cAdd">Ajouter</button>
       </div>
-      <div id="cookList" style="margin-top:10px"></div>
+      <div id="cookList" style="margin-top:12px"></div>
     </fieldset>
 
     <fieldset><legend>Format d'étiquette</legend>
@@ -322,11 +482,11 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
         <span>Largeur</span><input id="lw" type="number" value="62" inputmode="decimal"><span>mm</span>
         <span>Hauteur</span><input id="lh" type="number" value="29" inputmode="decimal"><span>mm</span>
       </div>
-      <p class="hint" style="margin:12px 0 0">Brother DK-11209 : 62 × 29. DK-11208 : 62 × 38. À l'impression, marges « aucune » et sans en-têtes ni pieds de page.</p>
+      <p class="hint" style="margin:14px 0 0">Brother DK-11209 : 62 × 29. DK-11208 : 62 × 38. À l'impression, marges « aucune » et sans en-têtes ni pieds de page.</p>
     </fieldset>
 
     <fieldset><legend>Archivage</legend>
-      <p class="hint">Exporte en fin de mois et range le fichier avec ton classeur. Les registres doivent être conservés 6 mois.</p>
+      <p class="hint">Exporte en fin de mois et range le fichier avec ton classeur. Les registres se conservent 6 mois.</p>
       <div class="exp">
         <button data-x="lots">Traçabilité</button>
         <button data-x="temps">Températures</button>
@@ -334,17 +494,28 @@ legend{font-size:13px;font-weight:700;color:var(--ink-soft);padding:0 6px}
         <button data-x="rec">Réceptions</button>
       </div>
     </fieldset>
+
+    <fieldset><legend>Effacer des données</legend>
+      <p class="hint">Chaque bouton demande une confirmation. Exporte avant si tu veux garder une trace.</p>
+      <div class="exp">
+        <button class="danger" data-w="lots">Stock et lots</button>
+        <button class="danger" data-w="temps">Relevés de température</button>
+        <button class="danger" data-w="cools">Refroidissements</button>
+        <button class="danger" data-w="rec">Réceptions</button>
+        <button class="danger" data-w="all">Tout effacer</button>
+      </div>
+      <p class="hint" id="wipeMsg" style="margin:12px 0 0"></p>
+    </fieldset>
   </section>
 </main>
 
 <div class="bar" id="bar">
   <button class="btn ghost" id="clear">Vider</button>
-  <div class="q"><b id="qn">0 étiquettes</b><small id="qs"></small></div>
+  <div class="q"><b id="qn">0 étiquette</b><small id="qs"></small></div>
   <button class="btn" id="print">Imprimer</button>
 </div>
 
 <div id="viewer"><button id="vClose" aria-label="Fermer">×</button><img id="vImg" alt="Étiquette"></div>
-
 <div id="sheet"></div>
 
 <script>
@@ -354,38 +525,65 @@ async function load(k,d){try{if(window.storage){const r=await window.storage.get
   const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return (k in mem)?mem[k]:d}}
 async function save(k,v){mem[k]=v;try{if(window.storage){await window.storage.set(k,JSON.stringify(v));return}
   localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+async function wipe(k){mem[k]=undefined;try{if(window.storage){await window.storage.delete(k);return}
+  localStorage.removeItem(k)}catch(e){}}
 
+/* ---------- Code 128 B ---------- */
+const C128=["11011001100","11001101100","11001100110","10010011000","10010001100","10001001100","10011001000","10011000100","10001100100","11001001000","11001000100","11000100100","10110011100","10011011100","10011001110","10111001100","10011101100","10011100110","11001110010","11001011100","11001001110","11011100100","11001110100","11101101110","11101001100","11100101100","11100100110","11101100100","11100110100","11100110010","11011011000","11011000110","11000110110","10100011000","10001011000","10001000110","10110001000","10001101000","10001100010","11010001000","11000101000","11000100010","10110111000","10110001110","10001101110","10111011000","10111000110","10001110110","11101110110","11010001110","11000101110","11011101000","11011100010","11011101110","11101011000","11101000110","11100010110","11101101000","11101100010","11100011010","11101111010","11001000010","11110001010","10100110000","10100001100","10010110000","10010000110","10000101100","10000100110","10110010000","10110000100","10011010000","10011000010","10000110100","10000110010","11000010010","11001010000","11110111010","11000010100","10001111010","10100111100","10010111100","10010011110","10111100100","10011110100","10011110010","11110100100","11110010100","11110010010","11011011110","11011110110","11110110110","10101111000","10100011110","10001011110","10111101000","10111100010","11110101000","11110100010","10111011110","10111101110","11101011110","11110101110","11010000100","11010010000","11010011100"];
+const C128_STOP="11000111010";
+function c128bits(data){
+  const v=[104];
+  for(const ch of data) v.push(ch.charCodeAt(0)-32);
+  let sum=v[0];
+  for(let i=1;i<v.length;i++) sum+=v[i]*i;
+  v.push(sum%103);
+  return v.map(k=>C128[k]).join("")+C128_STOP+"11";
+}
+function c128svg(data,wmm,hmm){
+  const bits=c128bits(data), n=bits.length, m=wmm/n;
+  let r="",i=0;
+  while(i<n){
+    if(bits[i]==="1"){let j=i;while(j<n&&bits[j]==="1")j++;
+      r+=`<rect x="${(i*m).toFixed(3)}" y="0" width="${((j-i)*m).toFixed(3)}" height="${hmm}" fill="#000"/>`;i=j}
+    else i++;
+  }
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${wmm}mm" height="${hmm}mm" viewBox="0 0 ${wmm} ${hmm}" shape-rendering="crispEdges">${r}</svg>`;
+}
+const LOT_ALPHA="ACDEFGHJKLMNPQRSTUVWXYZ23456789";
+const lotCode=()=>Array.from({length:8},()=>LOT_ALPHA[Math.floor(Math.random()*LOT_ALPHA.length)]).join("");
+
+/* ---------- données ---------- */
 const SEED=[
-  {n:"Batavia lavée coupée",j:1,t:"+4 °C",hot:false},
-  {n:"Tomates coupées",j:1,t:"+4 °C",hot:false},
-  {n:"Concombres coupés",j:2,t:"+4 °C",hot:false},
-  {n:"Menthe ciselée",j:1,t:"+4 °C",hot:false},
-  {n:"Persil-oignons sumac",j:1,t:"+4 °C",hot:false},
-  {n:"Aubergines grillées",j:2,t:"+4 °C",hot:true,w:"Jamais stockées sous huile"},
-  {n:"Hommos",j:3,t:"+4 °C",hot:false},
-  {n:"Labné",j:3,t:"+4 °C",hot:false},
-  {n:"Caviar d'aubergines",j:3,t:"+4 °C",hot:false},
-  {n:"Crème de sésame",j:3,t:"+4 °C",hot:false},
-  {n:"Lahme bajine",j:1,t:"0/+3 °C",hot:false,w:"Bœuf haché cru — prod. du jour"},
-  {n:"Chawarma poulet",j:3,t:"0/+3 °C",hot:true},
-  {n:"Dejaje",j:3,t:"0/+3 °C",hot:true},
-  {n:"Soujouk",j:3,t:"0/+3 °C",hot:true},
-  {n:"Basterma",j:3,t:"0/+3 °C",hot:false,w:"Prêt à manger — planche dédiée"},
-  {n:"Pâte à pain (agine)",j:2,t:"+4 °C",hot:false,w:"Diviser le bloc de 10 kg"},
-  {n:"Halloumm",j:3,t:"+4 °C",hot:false},
-  {n:"Olives",j:5,t:"+4 °C",hot:false},
-  {n:"Piments libanais",j:7,t:"+4 °C",hot:false},
-  {n:"Cornichons libanais",j:7,t:"+4 °C",hot:false},
-  {n:"Samboussek viande — à congeler",ln:"Samboussek viande",j:90,t:"-18 °C",hot:false,frz:true},
-  {n:"Samboussek fromage — à congeler",ln:"Samboussek fromage",j:90,t:"-18 °C",hot:false,frz:true},
-  {n:"Fatayer épinards — à congeler",ln:"Fatayer épinards",j:90,t:"-18 °C",hot:false,frz:true},
-  {n:"Kebbe — à congeler",ln:"Kebbe",j:90,t:"-18 °C",hot:false,frz:true},
-  {n:"Falafels — à congeler",ln:"Falafels",j:90,t:"-18 °C",hot:false,frz:true},
-  {n:"Samboussek viande — frit",ln:"Samboussek viande",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir"},
-  {n:"Samboussek fromage — frit",ln:"Samboussek fromage",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir"},
-  {n:"Fatayer épinards — frit",ln:"Fatayer épinards",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir"},
-  {n:"Kebbe — frit",ln:"Kebbe",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir"},
-  {n:"Falafels — frit",ln:"Falafels",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir"}
+  {n:"Batavia lavée coupée",j:1,t:"+4 °C",hot:false,q:2,u:"kg",id:"s01"},
+  {n:"Tomates coupées",j:1,t:"+4 °C",hot:false,q:3,u:"kg",id:"s02"},
+  {n:"Concombres coupés",j:2,t:"+4 °C",hot:false,q:2,u:"kg",id:"s03"},
+  {n:"Menthe ciselée",j:1,t:"+4 °C",hot:false,q:0.3,u:"kg",id:"s04"},
+  {n:"Persil-oignons sumac",j:1,t:"+4 °C",hot:false,q:1,u:"kg",id:"s05"},
+  {n:"Aubergines grillées",j:2,t:"+4 °C",hot:true,w:"Jamais stockées sous huile",q:2,u:"kg",id:"s06"},
+  {n:"Hommos",j:3,t:"+4 °C",hot:false,q:3,u:"kg",id:"s07"},
+  {n:"Labné",j:3,t:"+4 °C",hot:false,q:2,u:"kg",id:"s08"},
+  {n:"Caviar d'aubergines",j:3,t:"+4 °C",hot:false,q:2,u:"kg",id:"s09"},
+  {n:"Crème de sésame",j:3,t:"+4 °C",hot:false,q:1,u:"kg",id:"s10"},
+  {n:"Lahme bajine",j:1,t:"0/+3 °C",hot:false,w:"Bœuf haché cru — prod. du jour",q:3,u:"kg",id:"s11"},
+  {n:"Chawarma poulet",j:3,t:"0/+3 °C",hot:true,q:5,u:"kg",id:"s12"},
+  {n:"Dejaje",j:3,t:"0/+3 °C",hot:true,q:5,u:"kg",id:"s13"},
+  {n:"Soujouk",j:3,t:"0/+3 °C",hot:true,q:3,u:"kg",id:"s14"},
+  {n:"Basterma",j:3,t:"0/+3 °C",hot:false,w:"Prêt à manger — planche dédiée",q:1,u:"kg",id:"s15"},
+  {n:"Pâte à pain (agine)",j:2,t:"+4 °C",hot:false,w:"Diviser le bloc de 10 kg",q:10,u:"kg",id:"s16"},
+  {n:"Halloumm",j:3,t:"+4 °C",hot:false,q:2,u:"kg",id:"s17"},
+  {n:"Olives",j:5,t:"+4 °C",hot:false,q:2,u:"kg",id:"s18"},
+  {n:"Piments libanais",j:7,t:"+4 °C",hot:false,q:1,u:"kg",id:"s19"},
+  {n:"Cornichons libanais",j:7,t:"+4 °C",hot:false,q:1,u:"kg",id:"s20"},
+  {n:"Samboussek viande — à congeler",ln:"Samboussek viande",j:90,t:"-18 °C",hot:false,frz:true,q:100,u:"pce",id:"s21"},
+  {n:"Samboussek fromage — à congeler",ln:"Samboussek fromage",j:90,t:"-18 °C",hot:false,frz:true,q:100,u:"pce",id:"s22"},
+  {n:"Fatayer épinards — à congeler",ln:"Fatayer épinards",j:90,t:"-18 °C",hot:false,frz:true,q:100,u:"pce",id:"s23"},
+  {n:"Kebbe — à congeler",ln:"Kebbe",j:90,t:"-18 °C",hot:false,frz:true,q:100,u:"pce",id:"s24"},
+  {n:"Falafels — à congeler",ln:"Falafels",j:90,t:"-18 °C",hot:false,frz:true,q:100,u:"pce",id:"s25"},
+  {n:"Samboussek viande — frit",ln:"Samboussek viande",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir",q:50,u:"pce",id:"s26"},
+  {n:"Samboussek fromage — frit",ln:"Samboussek fromage",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir",q:50,u:"pce",id:"s27"},
+  {n:"Fatayer épinards — frit",ln:"Fatayer épinards",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir",q:50,u:"pce",id:"s28"},
+  {n:"Kebbe — frit",ln:"Kebbe",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir",q:50,u:"pce",id:"s29"},
+  {n:"Falafels — frit",ln:"Falafels",j:0,t:"≥ 63 °C",hot:false,w:"Invendu détruit le soir",q:50,u:"pce",id:"s30"}
 ];
 const SITES=["Laboratoire","62 rue Rambuteau"];
 const SEED_ENC=[
@@ -398,6 +596,16 @@ const SEED_ENC=[
 ];
 
 let cat=[],cooks=[],cook="",queue=[],cools=[],lots=[],enc=[],temps=[],rec=[],fmt={w:62,h:29};
+const FAM=[
+  [/batavia|tomate|concombre|menthe|persil/i,"cru"],
+  [/hommos|labné|caviar|sésame/i,"mezze"],
+  [/lahme|chawarma|dejaje|soujouk|basterma|aubergine/i,"viande"],
+  [/pâte|halloumm/i,"base"],
+  [/olive|piment|cornichon/i,"cond"],
+  [/congeler/i,"gel"],[/frit/i,"frit"]
+];
+const famOf=n=>{for(const[r,f]of FAM)if(r.test(n))return f;return"cru"};
+let scanMode="out", statDays=1, pendingPhoto=null, rKind="animale";
 
 const two=n=>String(n).padStart(2,"0");
 const dmy=d=>two(d.getDate())+"/"+two(d.getMonth()+1)+"/"+String(d.getFullYear()).slice(2);
@@ -407,6 +615,7 @@ const $=s=>document.querySelector(s);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 function plus(days){const d=new Date();d.setDate(d.getDate()+days);d.setHours(23,59,0,0);return d}
 function dayStart(){const d=new Date();d.setHours(0,0,0,0);return d.getTime()}
+const since=n=>dayStart()-(n-1)*86400000;
 
 /* ---------- étiquettes ---------- */
 function grid(){
@@ -414,7 +623,7 @@ function grid(){
   g.innerHTML=cat.map((p,i)=>{
     const q=queue.filter(x=>x.i===i).length;
     const dur=p.frz?Math.round(p.j/30)+" mois":(p.j?"J+"+p.j:"Jour même");
-    return `<button class="prod${q?" picked":""}" data-i="${i}">
+    return `<button class="prod fam-${famOf(p.n)}${q?" picked":""}" data-i="${i}">
       <span class="count">${q}</span>
       <span class="n">${esc(p.n)}</span>
       <span class="m">${dur} · ${esc(p.t)}${p.hot?' · <span class="hot">chaud</span>':""}${p.frz?' · <span class="frz">congelé</span>':""}</span>
@@ -437,7 +646,8 @@ $("#print").onclick=()=>{
   document.documentElement.style.setProperty("--lh",fmt.h+"mm");
   $("#sheet").innerHTML=queue.map(q=>{
     const p=cat[q.i], nm=p.ln||p.n, dlc=plus(p.j), code=lotCode();
-    lots.push({id:uid(),code,n:nm,src:p.n,t:p.t,frz:!!p.frz,fab:now.getTime(),dlc:dlc.getTime(),by:cook,out:null,why:null});
+    lots.push({id:uid(),code,n:nm,src:p.n,t:p.t,frz:!!p.frz,q:+p.q||0,u:p.u||"kg",
+      fab:now.getTime(),dlc:dlc.getTime(),by:cook,out:null,why:null});
     const bw=Math.min(fmt.w-6,46), tall=fmt.h>=34;
     return `<div class="lab">
       <div class="lname">${esc(nm)}</div>
@@ -446,124 +656,177 @@ $("#print").onclick=()=>{
         <div class="ldlc"><em>${p.j?"À CONSOMMER AVANT":"VENTE DU JOUR"}</em><b>${p.j?dmy(dlc):dmy(now)}</b></div>
       </div>
       <div class="lbc">${c128svg(code,bw,tall?6.5:5)}</div>
-      <div class="lbot"><span>${esc(p.t)}</span><span class="lcode">${code}</span><span>${esc(cook)}</span></div>
+      <div class="lbot"><span>${esc(p.t)}</span><span class="lcode">${code}</span><span>${p.q?esc(p.q+" "+(p.u||"kg"))+" · ":""}${esc(cook)}</span></div>
     </div>`}).join("");
   save("mnch_lots",lots);
-  queue=[];grid();bar();stkUI();badges();
+  queue=[];grid();bar();stkUI();
   window.print();
 };
 $("#clear").onclick=()=>{queue=[];grid();bar()};
 
-/* ---------- stock / traçabilité ---------- */
+/* ---------- stock ---------- */
 function stkUI(){
   const now=Date.now(), open=lots.filter(l=>!l.out).sort((a,b)=>a.dlc-b.dlc);
   $("#stkList").innerHTML=open.length?open.map(l=>{
-    const d=new Date(l.dlc), days=Math.ceil((l.dlc-dayStart())/86400000)-1;
+    const days=Math.ceil((l.dlc-dayStart())/86400000)-1;
     let cls="",tag="",tcls="";
     if(l.dlc<now){cls="bad";tag="Périmé";tcls="bad"}
     else if(days<=0){cls="warn";tag="Aujourd'hui";tcls="warn"}
     else if(days===1){tag="Demain"}
     else{tag="J+"+days}
     return `<div class="card ${cls}">
-      <div class="top">
-        <span class="nm">${esc(l.n)}</span>
-        <span class="tag ${tcls}">${tag}</span>
-      </div>
-      <div class="meta">${l.frz?"Congelé":"Fait"} le ${dmy(new Date(l.fab))} à ${hm(new Date(l.fab))} · ${esc(l.by||"—")} · ${esc(l.t)}<br>DLC ${dmy(d)}${l.code?' · <span class="lotcode">'+esc(l.code)+'</span>':""}</div>
+      <div class="top"><span class="nm">${esc(l.n)}</span><span class="tag ${tcls}">${tag}</span></div>
+      <div class="meta">${l.frz?"Congelé":"Fait"} le ${dmy(new Date(l.fab))} à ${hm(new Date(l.fab))} · ${esc(l.by||"—")} · ${esc(l.t)}<br>
+        DLC ${dmy(new Date(l.dlc))} · <span class="lotcode">${esc(l.code||"")}</span></div>
       <div class="acts">
         <button class="fin" data-u="${l.id}">Écoulé</button>
         <button class="kill" data-j="${l.id}">Jeté</button>
       </div>
-    </div>`}).join(""):`<p class="empty">Rien en stock. Imprime des étiquettes depuis l'onglet Étiquettes et les lots apparaîtront ici.</p>`;
+    </div>`}).join(""):`<p class="empty">Rien en stock. Imprime des étiquettes et les lots apparaîtront ici.</p>`;
   $("#stkList").querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>closeLot(b.dataset.u,"écoulé"));
   $("#stkList").querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>closeLot(b.dataset.j,"jeté"));
 
   const done=lots.filter(l=>l.out).sort((a,b)=>b.out-a.out).slice(0,15);
-  $("#stkDone").innerHTML=done.length?done.map(l=>`<div class="card done"><div class="top">
-    <span class="nm">${esc(l.n)}</span>
-    <span class="meta" style="margin:0">${dmy(new Date(l.fab))} → ${dmy(new Date(l.out))} · ${esc(l.why)}${l.outBy?" · "+esc(l.outBy):""}</span>
-  </div></div>`).join(""):`<p class="empty">Rien encore.</p>`;
+  $("#stkDone").innerHTML=done.length?done.map(l=>`<div class="card done">
+    <div class="top"><span class="nm">${esc(l.n)}</span>
+      <span class="tag ${l.why==="jeté"?"bad":"ok"}">${esc(l.why)}</span></div>
+    <div class="meta">${dmy(new Date(l.fab))} → ${dmy(new Date(l.out))}${l.outBy?" · "+esc(l.outBy):""}</div>
+  </div>`).join(""):`<p class="empty">Rien encore.</p>`;
 }
-let scanMode="out";
-const $sm=()=>document.getElementById("scanMsg");
-function scanSay(txt,cls){const m=$sm();if(!m)return;m.textContent=txt;m.className="scanmsg"+(cls?" "+cls:"")}
+function closeLot(id,why){
+  const l=lots.find(x=>x.id===id);if(!l)return;
+  l.out=Date.now();l.why=why;l.outBy=cook;
+  save("mnch_lots",lots);stkUI();
+}
 
+/* ---------- scan ---------- */
+function scanSay(t,c){const m=$("#scanMsg");if(m){m.textContent=t;m.className="scanmsg"+(c?" "+c:"")}}
 function setScanMode(m){
   scanMode=m;
-  const b=$("#scanMode"), box=$("#scanBox");
-  b.dataset.mode=m; b.textContent = m==="out" ? "Écoulé" : "Rebut";
-  box.classList.toggle("rebut", m==="jete");
-  scanSay(m==="out" ? "Les bacs scannés seront comptés comme écoulés."
-                    : "Mode rebut : les bacs scannés seront comptés comme jetés.",
-          m==="jete" ? "err" : "");
+  const b=$("#scanMode");
+  b.dataset.mode=m;b.textContent=m==="out"?"Écoulé":"Rebut";
+  $("#scanBox").classList.toggle("rebut",m==="jete");
+  scanSay(m==="out"?"Les bacs scannés seront comptés comme écoulés."
+                   :"Mode rebut : les bacs scannés seront comptés comme jetés.",
+          m==="jete"?"err":"");
   focusScan();
 }
 function focusScan(){
   const i=$("#scanIn");
-  if(i && $("#p-stk").classList.contains("on")) setTimeout(()=>i.focus(),30);
+  if(i&&$("#p-stk").classList.contains("on")) setTimeout(()=>i.focus(),40);
 }
 function handleScan(raw){
   const code=(raw||"").trim().toUpperCase();
-  if(!code) return;
+  if(!code)return;
   const l=lots.find(x=>x.code===code);
-  if(!l){ scanSay("Code "+code+" inconnu. Étiquette d'un autre système ?","err"); return; }
-  if(l.out){ scanSay(l.n+" déjà sorti le "+dmy(new Date(l.out))+" ("+l.why+").","err"); return; }
-  const why = scanMode==="out" ? "écoulé" : "jeté";
-  l.out=Date.now(); l.why=why; l.outBy=cook;
-  save("mnch_lots",lots);
-  scanSay(l.n+" — "+why+(why==="jeté"?" ⚠":" ✓"), why==="jeté"?"err":"ok");
-  stkUI(); badges(); focusScan();
-}
-
-function closeLot(id,why){
-  const l=lots.find(x=>x.id===id);if(!l)return;
+  if(!l){scanSay("Code "+code+" inconnu.","err");return}
+  if(l.out){scanSay(l.n+" déjà sorti le "+dmy(new Date(l.out))+" ("+l.why+").","err");return}
+  const why=scanMode==="out"?"écoulé":"jeté";
   l.out=Date.now();l.why=why;l.outBy=cook;
-  save("mnch_lots",lots);stkUI();badges();
+  save("mnch_lots",lots);
+  scanSay(l.n+" — "+why, why==="jeté"?"err":"ok");
+  stkUI();focusScan();
 }
+$("#scanMode").onclick=()=>setScanMode(scanMode==="out"?"jete":"out");
+$("#scanIn").addEventListener("keydown",e=>{
+  if(e.key==="Enter"){e.preventDefault();handleScan(e.target.value);e.target.value=""}});
+$("#scanIn").addEventListener("blur",()=>focusScan());
+
+/* ---------- bilan ---------- */
+let statMode="q";
+const fnum=n=>(Math.round(n*10)/10).toString().replace(".",",");
+function bilUI(){
+  const from=since(statDays);
+  const inP=lots.filter(l=>l.fab>=from);
+  const sum=a=>a.reduce((x,l)=>x+(+l.q||0),0);
+  const ec=inP.filter(l=>l.why==="écoulé"), je=inP.filter(l=>l.why==="jeté");
+  const prodQ=sum(inP), ecQ=sum(ec), jeQ=sum(je);
+  const sortis=ec.length+je.length, sortisQ=ecQ+jeQ;
+  const perte=statMode==="q" ? (sortisQ?Math.round(jeQ/sortisQ*100):0)
+                             : (sortis?Math.round(je.length/sortis*100):0);
+  const us=[...new Set(inP.map(l=>l.u||"kg"))];
+  const uL=us.length===1?us[0]:"mixte";
+  $("#kpis").innerHTML=`
+    <div class="kpi"><b>${statMode==="q"?fnum(prodQ):inP.length}</b><span>${statMode==="q"?"Produit ("+uL+")":"Bacs produits"}</span></div>
+    <div class="kpi"><b>${statMode==="q"?fnum(ecQ):ec.length}</b><span>Écoulé</span></div>
+    <div class="kpi${je.length?" alert":""}"><b>${statMode==="q"?fnum(jeQ):je.length}</b><span>Jeté</span></div>
+    <div class="kpi${perte>15?" alert":""}"><b>${perte}%</b><span>Taux de perte</span></div>`;
+
+  const by={};
+  for(const l of inP){
+    const k=l.n, q=+l.q||0;
+    if(!by[k])by[k]={n:k,u:l.u||"kg",nb:0,nbU:0,nbJ:0,nbS:0,tot:0,qU:0,qJ:0,qS:0};
+    const o=by[k];o.nb++;o.tot+=q;
+    if(l.why==="écoulé"){o.nbU++;o.qU+=q}
+    else if(l.why==="jeté"){o.nbJ++;o.qJ+=q}
+    else{o.nbS++;o.qS+=q}
+  }
+  const rows=Object.values(by).sort((a,b)=>b.nb-a.nb);
+  $("#statList").innerHTML=rows.length?rows.map(r=>{
+    const base=statMode==="q"?r.tot:r.nb;
+    const vU=statMode==="q"?r.qU:r.nbU, vJ=statMode==="q"?r.qJ:r.nbJ, vS=statMode==="q"?r.qS:r.nbS;
+    const pc=v=>(base?v/base*100:0).toFixed(1)+"%";
+    const fm=v=>statMode==="q"?fnum(v)+" "+r.u:v;
+    const tj=(vU+vJ)?Math.round(vJ/(vU+vJ)*100):0;
+    return `<div class="statrow">
+      <div class="sr"><span class="nm">${esc(r.n)}</span>
+        <span class="num">${fm(base)} <em>· ${r.nb} bac${r.nb>1?"s":""}</em></span></div>
+      <div class="bar2">
+        <i class="u" style="width:${pc(vU)}"></i>
+        <i class="j" style="width:${pc(vJ)}"></i>
+        <i class="s" style="width:${pc(vS)}"></i></div>
+      <div class="meta">${fm(vU)} écoulé · ${fm(vJ)} jeté${tj?" ("+tj+"% de perte)":""} · ${fm(vS)} en stock</div>
+    </div>`}).join(""):`<p class="empty">Aucune production sur cette période.</p>`;
+}
+document.querySelectorAll("#segUnit button").forEach(b=>b.onclick=()=>{
+  statMode=b.dataset.m;
+  document.querySelectorAll("#segUnit button").forEach(x=>x.classList.toggle("on",x===b));
+  bilUI();
+});
+document.querySelectorAll("#seg button").forEach(b=>b.onclick=()=>{
+  statDays=+b.dataset.d;
+  document.querySelectorAll("#seg button").forEach(x=>x.classList.toggle("on",x===b));
+  bilUI();
+});
 
 /* ---------- températures ---------- */
-function encSites(){
-  const out=[];
-  for(const e of enc){const s=e.site||"Sans site";if(!out.includes(s))out.push(s)}
-  return out;
-}
+function encSites(){const o=[];for(const e of enc){const s=e.site||"Sans site";if(!o.includes(s))o.push(s)}return o}
 function tmpUI(){
   const today=dayStart();
   $("#tmpList").innerHTML=encSites().map(site=>{
     const group=enc.filter(e=>(e.site||"Sans site")===site);
     const manque=group.filter(e=>!temps.some(x=>x.e===e.id&&x.t>=today)).length;
-    return `<div class="sitehead"><span>${esc(site)}</span>`+
-      `<span class="sitebdg${manque?" due":""}">${manque?manque+" à relever":"complet"}</span></div>`+
+    return `<div class="sitehead"><span>${esc(site)}</span>
+      <span class="sitebdg${manque?" due":""}">${manque?manque+" à relever":"complet"}</span></div>`+
       group.map(e=>{
-    const t=temps.filter(x=>x.e===e.id&&x.t>=today).sort((a,b)=>a.t-b.t);
-    const last=t[t.length-1];
-    const out=last&&(+last.v<e.min||+last.v>e.max);
-    return `<div class="card ${out?"bad":""}">
-      <div class="top">
-        <span class="nm">${esc(e.n)}</span>
-        <span class="tag">${e.min} à ${e.max} °C</span>
-      </div>
-      <div class="meta">${t.length?t.map(x=>hm(new Date(x.t))+" — "+x.v+" °C"+(x.by?" ("+esc(x.by)+")":"")).join(" · "):"Aucun relevé aujourd'hui"}</div>
-      <div class="acts">
-        <input class="tv" type="number" step="0.1" inputmode="decimal" placeholder="°C" data-v="${e.id}">
-        <button class="fin" data-a="${e.id}">Enregistrer</button>
-      </div>
-    </div>`}).join("");
+        const t=temps.filter(x=>x.e===e.id&&x.t>=today).sort((a,b)=>a.t-b.t);
+        const last=t[t.length-1];
+        const out=last&&(+last.v<e.min||+last.v>e.max);
+        return `<div class="card ${out?"bad":""}">
+          <div class="top"><span class="nm">${esc(e.n)}</span>
+            <span class="tag">${e.min} à ${e.max} °C</span></div>
+          <div class="meta">${t.length?t.map(x=>hm(new Date(x.t))+" — "+x.v+" °C").join(" · "):"Aucun relevé aujourd'hui"}</div>
+          <div class="acts">
+            <input class="tv" type="number" step="0.1" inputmode="decimal" placeholder="°C" data-v="${e.id}">
+            <button class="fin" data-a="${e.id}">Enregistrer</button>
+          </div>
+        </div>`}).join("");
   }).join("");
   $("#tmpList").querySelectorAll("[data-a]").forEach(b=>b.onclick=()=>{
     const inp=$('.tv[data-v="'+b.dataset.a+'"]'), v=(inp.value||"").trim();
     if(v===""){inp.focus();return}
     temps.push({id:uid(),e:b.dataset.a,t:Date.now(),v:v.replace(",","."),by:cook});
-    save("mnch_temps",temps);tmpUI();badges();
+    save("mnch_temps",temps);tmpUI();
   });
   const recent=temps.slice(-25).reverse();
   $("#tmpLog").innerHTML=recent.length?recent.map(x=>{
-    const e=enc.find(y=>y.id===x.e)||{n:"?",min:-99,max:99};
+    const e=enc.find(y=>y.id===x.e)||{n:"?",site:"",min:-99,max:99};
     const out=+x.v<e.min||+x.v>e.max;
-    return `<div class="card done" style="padding:9px 12px"><div class="top">
-      <span class="nm" style="font-weight:600">${esc(e.n)}<small style="color:var(--ink-soft);font-weight:400"> · ${esc(e.site||"")}</small></span>
-      <span class="meta" style="margin:0${out?";color:var(--sumac);font-weight:800":""}">${dmy(new Date(x.t))} ${hm(new Date(x.t))} · ${esc(x.v)} °C</span>
-    </div></div>`}).join(""):`<p class="empty">Rien encore.</p>`;
+    return `<div class="card done" style="padding:11px 14px">
+      <div class="top"><span class="nm" style="font-size:14px">${esc(e.n)}</span>
+        <span class="tag${out?" bad":""}">${esc(x.v)} °C</span></div>
+      <div class="meta">${esc(e.site||"")} · ${dmy(new Date(x.t))} ${hm(new Date(x.t))}${x.by?" · "+esc(x.by):""}</div>
+    </div>`}).join(""):`<p class="empty">Rien encore.</p>`;
 }
 
 /* ---------- refroidissement ---------- */
@@ -572,11 +835,9 @@ function coolUI(){
   $("#coolList").innerHTML=open.length?open.map(c=>{
     const mins=Math.floor((now-c.start)/60000), late=mins>120;
     return `<div class="card ${late?"bad":""}">
-      <div class="top">
-        <span class="nm">${esc(c.n)}</span>
+      <div class="top"><span class="nm">${esc(c.n)}</span>
         <span class="el${late?" bad":""}">${Math.floor(mins/60)} h ${two(mins%60)}</span>
-        <button class="del" data-c="${c.id}" aria-label="Annuler">×</button>
-      </div>
+        <button class="del" data-c="${c.id}" aria-label="Annuler">×</button></div>
       <div class="log"><div>Sortie de cuisson ${hm(new Date(c.start))}</div>
         ${c.reads.map(r=>`<div>${hm(new Date(r.t))} — ${r.v} °C</div>`).join("")}</div>
       <div class="acts">
@@ -589,75 +850,37 @@ function coolUI(){
     const inp=$('.tmp[data-t="'+b.dataset.r+'"]'), v=(inp.value||"").trim();
     if(v===""){inp.focus();return}
     cools.find(x=>x.id===b.dataset.r).reads.push({t:Date.now(),v:v.replace(",",".")});
-    save("mnch_cools",cools);coolUI();
-  });
+    save("mnch_cools",cools);coolUI()});
   $("#coolList").querySelectorAll("[data-e]").forEach(b=>b.onclick=()=>{
     const inp=$('.tmp[data-t="'+b.dataset.e+'"]'), v=(inp.value||"").trim();
     const c=cools.find(x=>x.id===b.dataset.e);
     if(v!=="")c.reads.push({t:Date.now(),v:v.replace(",",".")});
-    c.end=Date.now();c.by=cook;save("mnch_cools",cools);coolUI();
-  });
+    c.end=Date.now();c.by=cook;save("mnch_cools",cools);coolUI()});
   $("#coolList").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{
-    cools=cools.filter(x=>x.id!==b.dataset.c);save("mnch_cools",cools);coolUI();
-  });
+    cools=cools.filter(x=>x.id!==b.dataset.c);save("mnch_cools",cools);coolUI()});
   $("#coolDone").innerHTML=done.length?done.map(c=>{
-    const mins=Math.floor((c.end-c.start)/60000);
+    const mins=Math.floor((c.end-c.start)/60000), late=mins>120;
     const last=c.reads.length?c.reads[c.reads.length-1].v+" °C":"—";
-    return `<div class="card done"><div class="top">
-      <span class="nm">${esc(c.n)}</span>
-      <span class="meta" style="margin:0">${dmy(new Date(c.start))} · ${Math.floor(mins/60)} h ${two(mins%60)} · ${esc(last)} · ${esc(c.by||"")}</span>
-    </div></div>`}).join(""):`<p class="empty">Rien encore enregistré.</p>`;
+    return `<div class="card done">
+      <div class="top"><span class="nm">${esc(c.n)}</span>
+        <span class="tag${late?" bad":" ok"}">${Math.floor(mins/60)} h ${two(mins%60)}</span></div>
+      <div class="meta">${dmy(new Date(c.start))} · fin à ${esc(last)}${c.by?" · "+esc(c.by):""}</div>
+    </div>`}).join(""):`<p class="empty">Rien encore enregistré.</p>`;
 }
-$("#scanMode").onclick=()=>setScanMode(scanMode==="out"?"jete":"out");
-$("#scanIn").addEventListener("keydown",e=>{
-  if(e.key==="Enter"){e.preventDefault();handleScan(e.target.value);e.target.value=""}
-});
-$("#scanIn").addEventListener("blur",()=>focusScan());
-
 $("#coolStart").onclick=()=>{
   const p=cat[+$("#coolPick").value];if(!p)return;
   cools.push({id:uid(),n:p.ln||p.n,start:Date.now(),reads:[],end:null,by:cook});
-  save("mnch_cools",cools);coolUI();
-};
+  save("mnch_cools",cools);coolUI()};
 
-/* ---------- code-barres Code 128 B ---------- */
-const C128=["11011001100","11001101100","11001100110","10010011000","10010001100","10001001100","10011001000","10011000100","10001100100","11001001000","11001000100","11000100100","10110011100","10011011100","10011001110","10111001100","10011101100","10011100110","11001110010","11001011100","11001001110","11011100100","11001110100","11101101110","11101001100","11100101100","11100100110","11101100100","11100110100","11100110010","11011011000","11011000110","11000110110","10100011000","10001011000","10001000110","10110001000","10001101000","10001100010","11010001000","11000101000","11000100010","10110111000","10110001110","10001101110","10111011000","10111000110","10001110110","11101110110","11010001110","11000101110","11011101000","11011100010","11011101110","11101011000","11101000110","11100010110","11101101000","11101100010","11100011010","11101111010","11001000010","11110001010","10100110000","10100001100","10010110000","10010000110","10000101100","10000100110","10110010000","10110000100","10011010000","10011000010","10000110100","10000110010","11000010010","11001010000","11110111010","11000010100","10001111010","10100111100","10010111100","10010011110","10111100100","10011110100","10011110010","11110100100","11110010100","11110010010","11011011110","11011110110","11110110110","10101111000","10100011110","10001011110","10111101000","10111100010","11110101000","11110100010","10111011110","10111101110","11101011110","11110101110","11010000100","11010010000","11010011100"];
-const C128_STOP="11000111010";
-function c128bits(data){
-  const v=[104];
-  for(const ch of data) v.push(ch.charCodeAt(0)-32);
-  let sum=v[0];
-  for(let i=1;i<v.length;i++) sum+=v[i]*i;
-  v.push(sum%103);
-  return v.map(k=>C128[k]).join("")+C128_STOP+"11";
-}
-function c128svg(data,wmm,hmm){
-  const bits=c128bits(data), n=bits.length, m=wmm/n;
-  let r="",i=0;
-  while(i<n){
-    if(bits[i]==="1"){let j=i;while(j<n&&bits[j]==="1")j++;
-      r+=`<rect x="${(i*m).toFixed(3)}" y="0" width="${((j-i)*m).toFixed(3)}" height="${hmm}" fill="#000"/>`;i=j;}
-    else i++;
-  }
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${wmm}mm" height="${hmm}mm" viewBox="0 0 ${wmm} ${hmm}" shape-rendering="crispEdges">${r}</svg>`;
-}
-const LOT_ALPHA="ACDEFGHJKLMNPQRSTUVWXYZ23456789";
-function lotCode(){
-  let c="";
-  for(let i=0;i<8;i++) c+=LOT_ALPHA[Math.floor(Math.random()*LOT_ALPHA.length)];
-  return c;
-}
-
-/* ---------- réception marchandises ---------- */
-let pendingPhoto=null, rKind="animale";
-
+/* ---------- réception ---------- */
 document.querySelectorAll("#rKind button").forEach(b=>b.onclick=()=>{
   rKind=b.dataset.k;
   document.querySelectorAll("#rKind button").forEach(x=>x.classList.toggle("on",x===b));
+  photoLbl()});
+function photoLbl(){
   $("#rPhotoTxt").textContent = pendingPhoto ? "Étiquette photographiée — toucher pour refaire"
     : (rKind==="animale" ? "Photographier l'étiquette ou la facture" : "Photographier la facture (facultatif)");
-});
-
+}
 $("#rPhoto").onchange=e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;
   const img=new Image(), fr=new FileReader();
@@ -667,71 +890,126 @@ $("#rPhoto").onchange=e=>{
     cv.width=Math.round(img.width*sc);cv.height=Math.round(img.height*sc);
     cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
     pendingPhoto=cv.toDataURL("image/jpeg",0.62);
-    $("#rPhotoLbl").classList.add("has");
-    $("#rPhotoTxt").textContent="Étiquette photographiée — toucher pour refaire";
-  };img.src=fr.result};
-  fr.readAsDataURL(f);
-};
-
+    $("#rPhotoLbl").classList.add("has");photoLbl()};img.src=fr.result};
+  fr.readAsDataURL(f)};
 async function addRec(refuse){
   const sup=$("#rSup").value.trim(), prod=$("#rProd").value.trim();
-  if(!sup||!prod){($("#rSup").value.trim()?$("#rProd"):$("#rSup")).focus();return}
+  if(!sup||!prod){(sup?$("#rProd"):$("#rSup")).focus();return}
   const id=uid();
   if(pendingPhoto) await save("mnch_ph_"+id,pendingPhoto);
   rec.push({id,sup,prod,lot:$("#rLot").value.trim(),doc:$("#rDoc").value.trim(),
-    orig:$("#rOrig").value.trim(),dlc:$("#rDlc").value,
-    qty:$("#rQty").value.trim(),tmp:($("#rTmp").value||"").trim().replace(",","."),
-    t:Date.now(),by:cook,ph:!!pendingPhoto,ref:!!refuse,kind:rKind});
+    orig:$("#rOrig").value.trim(),dlc:$("#rDlc").value,qty:$("#rQty").value.trim(),
+    tmp:($("#rTmp").value||"").trim().replace(",","."),t:Date.now(),by:cook,
+    ph:!!pendingPhoto,ref:!!refuse,kind:rKind});
   await save("mnch_rec",rec);
   ["rSup","rProd","rLot","rDoc","rOrig","rDlc","rQty","rTmp"].forEach(k=>$("#"+k).value="");
-  pendingPhoto=null;
-  $("#rPhotoLbl").classList.remove("has");
-  $("#rPhotoTxt").textContent = rKind==="animale" ? "Photographier l'étiquette ou la facture"
-    : "Photographier la facture (facultatif)";
-  recUI();
+  pendingPhoto=null;$("#rPhotoLbl").classList.remove("has");photoLbl();recUI();
 }
 $("#rAdd").onclick=()=>addRec(false);
 $("#rRef").onclick=()=>addRec(true);
-
 function recUI(){
-  $("#sups").innerHTML=[...new Set(rec.map(r=>r.sup))].map(s=>`<option value="${esc(s)}">`).join("");
-  const rows=[...rec].sort((a,b)=>b.t-a.t).slice(0,60);
+  $("#sups").innerHTML=[...new Set(rec.map(r=>r.sup))].map(x=>`<option value="${esc(x)}">`).join("");
   const KN={animale:"Origine animale",vegetal:"Fruits & légumes",sec:"Épicerie & sec"};
+  const rows=[...rec].sort((a,b)=>b.t-a.t).slice(0,60);
   $("#recList").innerHTML=rows.length?rows.map(r=>{
     const k=r.kind||"animale", manque=(k==="animale")&&!r.ph&&!r.doc&&!r.ref;
     return `<div class="card ${r.ref?"bad":(manque?"warn":"")}">
-      <div class="top">
-        <span class="nm">${esc(r.prod)}</span>
-        <span class="tag${r.ref?" bad":(manque?" warn":"")}">${r.ref?"Refusé":(manque?"Étiquette manquante":dmy(new Date(r.t)))}</span>
-      </div>
-      <div class="meta" style="margin-bottom:-2px">${KN[k]}${manque?" · sans photo ni n° de facture":""}</div>
-      <div class="meta">${esc(r.sup)}${r.qty?" · "+esc(r.qty):""}${r.tmp!==""?" · "+esc(r.tmp)+" °C":""} · ${esc(r.by||"—")}<br>
+      <div class="top"><span class="nm">${esc(r.prod)}</span>
+        <span class="tag${r.ref?" bad":(manque?" warn":"")}">${r.ref?"Refusé":(manque?"Preuve manquante":dmy(new Date(r.t)))}</span></div>
+      <div class="meta">${KN[k]} · ${esc(r.sup)}${r.qty?" · "+esc(r.qty):""}${r.tmp!==""?" · "+esc(r.tmp)+" °C":""}<br>
         ${r.doc?"Facture "+esc(r.doc)+" · ":""}Lot ${esc(r.lot||"—")}${r.dlc?" · DLC "+esc(r.dlc.split("-").reverse().join("/")):""}${r.orig?"<br>Origine : "+esc(r.orig):""}</div>
       <div class="acts">
         ${r.ph?`<button data-ph="${r.id}">Voir l'étiquette</button>`:`<span style="flex:1"></span>`}
         <button class="kill" data-rd="${r.id}">Supprimer</button>
       </div>
-    </div>`}).join(""):`<p class="empty">Aucune réception enregistrée. Remplis le formulaire à chaque livraison.</p>`;
+    </div>`}).join(""):`<p class="empty">Aucune réception enregistrée.</p>`;
   $("#recList").querySelectorAll("[data-ph]").forEach(b=>b.onclick=async()=>{
     const p=await load("mnch_ph_"+b.dataset.ph,null);
-    if(!p)return;$("#vImg").src=p;$("#viewer").classList.add("on");
-  });
+    if(!p)return;$("#vImg").src=p;$("#viewer").classList.add("on")});
   $("#recList").querySelectorAll("[data-rd]").forEach(b=>b.onclick=async()=>{
+    await wipe("mnch_ph_"+b.dataset.rd);
     rec=rec.filter(x=>x.id!==b.dataset.rd);
-    await save("mnch_rec",rec);recUI();
-  });
+    await save("mnch_rec",rec);recUI()});
 }
 $("#vClose").onclick=()=>{$("#viewer").classList.remove("on");$("#vImg").src=""};
 $("#viewer").onclick=e=>{if(e.target.id==="viewer")$("#vClose").click()};
 
+/* ---------- journal du jour ---------- */
+function dashUI(){
+  const t0=dayStart(), now=Date.now();
+  const perimes=lots.filter(l=>!l.out&&l.dlc<now);
+  const auj=lots.filter(l=>!l.out&&l.dlc>=now&&l.dlc<t0+86400000);
+  const tempsDus=enc.filter(e=>!temps.some(x=>x.e===e.id&&x.t>=t0));
+  const tempsHors=temps.filter(x=>{const e=enc.find(y=>y.id===x.e);
+    return e&&x.t>=t0&&(+x.v<e.min||+x.v>e.max)});
+  const coolOuv=cools.filter(c=>!c.end);
+  const coolLate=coolOuv.filter(c=>(now-c.start)/60000>120);
+  const coolFin=cools.filter(c=>c.end&&c.end>=t0);
+  const prodJour=lots.filter(l=>l.fab>=t0);
+  const recJour=rec.filter(r=>r.t>=t0);
+  const recManque=rec.filter(r=>(r.kind||"animale")==="animale"&&!r.ph&&!r.doc&&!r.ref);
+  const pl_=(n,s1)=>n+(n>1?s1:"");
+
+  const alertes=[],vigil=[];
+  if(perimes.length) alertes.push(perimes.length+" lot"+(perimes.length>1?"s":"")+" périmé"+(perimes.length>1?"s":"")+" à retirer du stock");
+  if(coolLate.length) alertes.push(coolLate.length+" refroidissement au-delà de 2 h — CCP 2 dépassé");
+  if(tempsHors.length) alertes.push(tempsHors.length+" relevé de température hors plage");
+  if(recManque.length) alertes.push(recManque.length+" réception d'origine animale sans preuve de traçabilité");
+  if(tempsDus.length) vigil.push(tempsDus.length+" enceinte"+(tempsDus.length>1?"s":"")+" pas encore relevée aujourd'hui");
+  if(auj.length) vigil.push(auj.length+" lot"+(auj.length>1?"s":"")+" à consommer aujourd'hui");
+
+  const cls=alertes.length?"bad":(vigil.length?"warn":"ok");
+  const titre=alertes.length?"Écarts à traiter":(vigil.length?"Points de vigilance":"Aucun écart constaté");
+  const corps=(alertes.length||vigil.length)
+    ? "<ul>"+[...alertes,...vigil].map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>"
+    : "<p>Tous les enregistrements du jour sont à jour et conformes aux limites critiques du PMS.</p>";
+  $("#dashState").innerHTML=`<div class="state ${cls}"><b>${titre}</b>${corps}</div>`;
+  tiles();
+
+  const line=(nom,val,st,note)=>`<div class="card" style="padding:13px 15px">
+    <div class="top"><span class="nm" style="font-size:14.5px">${nom}</span>
+      <span class="tag ${st}">${val}</span></div>
+    <div class="meta">${note}</div></div>`;
+  $("#dashCcp").innerHTML=
+    line("CCP 2 — Refroidissement rapide",
+      coolLate.length?coolLate.length+" hors limite":(coolOuv.length?coolOuv.length+" en cours":"conforme"),
+      coolLate.length?"bad":(coolOuv.length?"warn":"ok"),
+      coolFin.length+" terminé"+(coolFin.length>1?"s":"")+" aujourd'hui · limite +63 → +10 °C en 2 h")+
+    line("Enceintes froides et chaudes",
+      tempsHors.length?tempsHors.length+" hors plage":(tempsDus.length?tempsDus.length+" à relever":"conforme"),
+      tempsHors.length?"bad":(tempsDus.length?"warn":"ok"),
+      (enc.length-tempsDus.length)+" sur "+enc.length+" enceintes relevées aujourd'hui")+
+    line("DLC et rotation des stocks",
+      perimes.length?perimes.length+" périmé"+(perimes.length>1?"s":""):(auj.length?auj.length+" aujourd'hui":"conforme"),
+      perimes.length?"bad":(auj.length?"warn":"ok"),
+      lots.filter(l=>!l.out).length+" lots en stock, classés par date de péremption")+
+    line("Traçabilité amont",
+      recManque.length?recManque.length+" incomplète"+(recManque.length>1?"s":""):"conforme",
+      recManque.length?"bad":"ok",
+      recJour.length+" réception"+(recJour.length>1?"s":"")+" enregistrée"+(recJour.length>1?"s":"")+" aujourd'hui");
+
+  const qJour=prodJour.reduce((a,l)=>a+(+l.q||0),0);
+  const par={};
+  for(const l of prodJour){const k=l.n;if(!par[k])par[k]={n:k,nb:0,q:0,u:l.u||"kg"};
+    par[k].nb++;par[k].q+=+l.q||0}
+  const rows=Object.values(par).sort((a,b)=>b.q-a.q);
+  $("#dashAct").innerHTML=`<div class="kpis">
+      <div class="kpi"><b>${prodJour.length}</b><span>Bacs étiquetés</span></div>
+      <div class="kpi"><b>${fnum(qJour)}</b><span>Quantité produite</span></div>
+      <div class="kpi"><b>${lots.filter(l=>l.out&&l.out>=t0).length}</b><span>Lots sortis</span></div>
+    </div>`+
+    (rows.length?rows.map(r=>`<div class="statrow"><div class="sr">
+        <span class="nm">${esc(r.n)}</span>
+        <span class="num">${fnum(r.q)} ${esc(r.u)} <em>· ${r.nb} bac${r.nb>1?"s":""}</em></span>
+      </div></div>`).join("")
+      :`<p class="empty">Aucune production enregistrée aujourd'hui.</p>`);
+}
+
 /* ---------- badges ---------- */
-function badges(){
+function _badgesObsolete(){
   const now=Date.now();
   const urgent=lots.filter(l=>!l.out&&l.dlc<now+86400000).length;
-  const b1=$("#bStk");b1.style.display=urgent?"inline-block":"none";b1.textContent=urgent;
-  const today=dayStart();
-  const miss=enc.filter(e=>!temps.some(x=>x.e===e.id&&x.t>=today)).length;
-  const b2=$("#bTmp");b2.style.display=miss?"inline-block":"none";b2.textContent=miss;
+  if($("#p-dash").classList.contains("on")) dashUI();
 }
 
 /* ---------- réglages ---------- */
@@ -739,36 +1017,34 @@ function list(){
   $("#list").innerHTML=cat.map((p,i)=>`<div class="row">
     <span class="nm">${esc(p.n)}</span>
     <input class="w-j" type="number" min="0" max="400" value="${p.j}" data-f="j" data-i="${i}" inputmode="numeric">
+    <input class="w-j" type="number" min="0" step="0.1" value="${p.q??0}" data-f="q" data-i="${i}" inputmode="decimal" aria-label="Quantité">
+    <input class="w-s" value="${esc(p.u||"kg")}" data-f="u" data-i="${i}" aria-label="Unité">
     <input class="w-t" value="${esc(p.t)}" data-f="t" data-i="${i}">
-    <label style="font-size:13px;display:flex;align-items:center;gap:4px">
+    <label style="font-size:12.5px;display:flex;align-items:center;gap:4px">
       <input type="checkbox" data-f="hot" data-i="${i}" ${p.hot?"checked":""}> chaud</label>
     <button class="del" data-d="${i}" aria-label="Supprimer">×</button>
   </div>`).join("");
   $("#list").querySelectorAll("[data-f]").forEach(el=>el.onchange=()=>{
     const i=+el.dataset.i,f=el.dataset.f;
-    cat[i][f]=f==="j"?Math.max(0,+el.value||0):(f==="hot"?el.checked:el.value);
-    save("mnch_cat_v5",cat);grid();
-  });
+    cat[i][f]=(f==="j"||f==="q")?Math.max(0,+el.value||0):(f==="hot"?el.checked:el.value);
+    save("mnch_cat_v6",cat);grid()});
   $("#list").querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{
     const i=+b.dataset.d;cat.splice(i,1);
     queue=queue.filter(q=>q.i!==i).map(q=>({i:q.i>i?q.i-1:q.i}));
-    save("mnch_cat_v5",cat);list();grid();bar();
-  });
+    save("mnch_cat_v6",cat);list();grid();bar()});
 }
 function encUI(){
   $("#encList").innerHTML=enc.map((e,i)=>`<div class="row">
-    <span class="nm">${esc(e.n)}<br><small style="color:var(--ink-soft);font-weight:500">${esc(e.site||"Sans site")}</small></span>
+    <span class="nm">${esc(e.n)}<small>${esc(e.site||"Sans site")}</small></span>
     <input class="w-s" type="number" value="${e.min}" data-ef="min" data-i="${i}" inputmode="numeric">
     <input class="w-s" type="number" value="${e.max}" data-ef="max" data-i="${i}" inputmode="numeric">
     <button class="del" data-ed="${i}" aria-label="Supprimer">×</button>
   </div>`).join("");
   $("#encSites").innerHTML=encSites().map(x=>`<option value="${esc(x)}">`).join("");
   $("#encList").querySelectorAll("[data-ef]").forEach(el=>el.onchange=()=>{
-    enc[+el.dataset.i][el.dataset.ef]=+el.value||0;save("mnch_enc_v2",enc);tmpUI();
-  });
+    enc[+el.dataset.i][el.dataset.ef]=+el.value||0;save("mnch_enc_v2",enc);tmpUI()});
   $("#encList").querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>{
-    enc.splice(+b.dataset.ed,1);save("mnch_enc_v2",enc);encUI();tmpUI();badges();
-  });
+    enc.splice(+b.dataset.ed,1);save("mnch_enc_v2",enc);encUI();tmpUI()});
 }
 function cookUI(){
   $("#cooks").innerHTML=`<span>Fait par</span>`+cooks.map(c=>
@@ -780,25 +1056,22 @@ function cookUI(){
   $("#cookList").querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{
     cooks=cooks.filter(c=>c!==b.dataset.x);
     if(cook===b.dataset.x)cook=cooks[0]||"";
-    save("mnch_cooks",cooks);save("mnch_cook",cook);cookUI();
-  });
+    save("mnch_cooks",cooks);save("mnch_cook",cook);cookUI()});
 }
 $("#nAdd").onclick=()=>{
   const n=$("#nName").value.trim();if(!n)return;
-  cat.push({n,j:Math.max(0,+$("#nDays").value||3),t:"+4 °C",hot:false});
-  $("#nName").value="";save("mnch_cat_v5",cat);list();grid();
-};
+  cat.push({n,j:Math.max(0,+$("#nDays").value||3),q:Math.max(0,+$("#nQty").value||0),
+    u:($("#nUnit").value||"kg").trim(),t:"+4 °C",hot:false});
+  $("#nName").value="";save("mnch_cat_v6",cat);list();grid()};
 $("#eAdd").onclick=()=>{
   const n=$("#eName").value.trim();if(!n)return;
   enc.push({id:uid(),site:$("#eSite").value.trim()||SITES[0],n,
     min:+$("#eMin").value||0,max:+$("#eMax").value||4});
-  $("#eName").value="";save("mnch_enc_v2",enc);encUI();tmpUI();badges();
-};
+  $("#eName").value="";save("mnch_enc_v2",enc);encUI();tmpUI()};
 $("#cAdd").onclick=()=>{
   const c=$("#nCook").value.trim().toUpperCase();if(!c||cooks.includes(c))return;
   cooks.push(c);if(!cook)cook=c;$("#nCook").value="";
-  save("mnch_cooks",cooks);save("mnch_cook",cook);cookUI();
-};
+  save("mnch_cooks",cooks);save("mnch_cook",cook);cookUI()};
 ["lw","lh"].forEach(k=>$("#"+k).onchange=e=>{
   fmt[k==="lw"?"w":"h"]=Math.max(10,+e.target.value||10);save("mnch_fmt3",fmt)});
 
@@ -806,8 +1079,7 @@ $("#cAdd").onclick=()=>{
 function csv(rows){
   return "\uFEFF"+rows.map(r=>r.map(c=>{
     const s=String(c??"");
-    return /[";\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
-  }).join(";")).join("\r\n");
+    return /[";\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}).join(";")).join("\r\n");
 }
 function dl(name,text){
   const a=document.createElement("a");
@@ -816,17 +1088,17 @@ function dl(name,text){
   setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);
 }
 document.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{
-  const st=dmy(new Date()).replace(/\//g,"-");
-  if(b.dataset.x==="lots"){
-    dl("tracabilite-"+st+".csv",csv([["Code lot","Produit","Fabrication","Heure","DLC","Conservation","Fait par","Sortie","Motif","Sorti par"],
-      ...lots.map(l=>[l.code||"",l.n,dmy(new Date(l.fab)),hm(new Date(l.fab)),dmy(new Date(l.dlc)),l.t,l.by||"",
+  const st=dmy(new Date()).replace(/\//g,"-"), x=b.dataset.x;
+  if(x==="lots"){
+    dl("tracabilite-"+st+".csv",csv([["Code lot","Produit","Quantite","Unite","Fabrication","Heure","DLC","Conservation","Fait par","Sortie","Motif","Sorti par"],
+      ...lots.map(l=>[l.code||"",l.n,l.q??"",l.u||"",dmy(new Date(l.fab)),hm(new Date(l.fab)),dmy(new Date(l.dlc)),l.t,l.by||"",
         l.out?dmy(new Date(l.out)):"",l.why||"en stock",l.outBy||""])]));
-  }else if(b.dataset.x==="temps"){
+  }else if(x==="temps"){
     dl("temperatures-"+st+".csv",csv([["Site","Enceinte","Date","Heure","Temp (°C)","Mini","Maxi","Conforme","Par"],
-      ...temps.map(x=>{const e=enc.find(y=>y.id===x.e)||{n:"?",site:"",min:"",max:""};
-        const ok=e.min===""?"":((+x.v>=e.min&&+x.v<=e.max)?"oui":"NON");
-        return [e.site||"",e.n,dmy(new Date(x.t)),hm(new Date(x.t)),x.v,e.min,e.max,ok,x.by||""]})]));
-  }else if(b.dataset.x==="rec"){
+      ...temps.map(v=>{const e=enc.find(y=>y.id===v.e)||{n:"?",site:"",min:"",max:""};
+        const ok=e.min===""?"":((+v.v>=e.min&&+v.v<=e.max)?"oui":"NON");
+        return [e.site||"",e.n,dmy(new Date(v.t)),hm(new Date(v.t)),v.v,e.min,e.max,ok,v.by||""]})]));
+  }else if(x==="rec"){
     dl("receptions-"+st+".csv",csv([["Date","Heure","Categorie","Fournisseur","Produit","N facture","Lot","Origine","DLC produit","Quantite","Temp reception","Photo","Statut","Par"],
       ...rec.map(r=>[dmy(new Date(r.t)),hm(new Date(r.t)),
         ({animale:"Origine animale",vegetal:"Fruits & legumes",sec:"Epicerie & sec"})[r.kind||"animale"],
@@ -834,25 +1106,98 @@ document.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>{
         r.dlc?r.dlc.split("-").reverse().join("/"):"",r.qty||"",r.tmp||"",r.ph?"oui":"non",
         r.ref?"REFUSE":"accepte",r.by||""])]));
   }else{
-    dl("refroidissements-"+st+".csv",csv([["Produit","Date","Sortie cuisson","Mise au froid","Durée (min)","Relevés","Par"],
+    dl("refroidissements-"+st+".csv",csv([["Produit","Date","Sortie cuisson","Mise au froid","Duree (min)","Releves","Par"],
       ...cools.filter(c=>c.end).map(c=>[c.n,dmy(new Date(c.start)),hm(new Date(c.start)),hm(new Date(c.end)),
         Math.round((c.end-c.start)/60000),c.reads.map(r=>hm(new Date(r.t))+" "+r.v+"°C").join(" | "),c.by||""])]));
   }
 });
 
-/* ---------- onglets ---------- */
-document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
-  document.querySelectorAll("#nav button").forEach(x=>x.classList.toggle("on",x===b));
-  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+b.dataset.p));
-  if(b.dataset.p==="cool")coolUI();
-  if(b.dataset.p==="stk"){stkUI();focusScan()}
-  if(b.dataset.p==="tmp")tmpUI();
-  if(b.dataset.p==="rec")recUI();
+/* ---------- effacement ---------- */
+let armed=null, armTimer=null;
+const WIPE_LBL={lots:"Stock et lots",temps:"Relevés de température",
+  cools:"Refroidissements",rec:"Réceptions",all:"Tout effacer"};
+function disarm(){
+  clearTimeout(armTimer);armed=null;
+  document.querySelectorAll("[data-w]").forEach(b=>b.textContent=WIPE_LBL[b.dataset.w]);
+  $("#wipeMsg").textContent="";
+}
+document.querySelectorAll("[data-w]").forEach(b=>b.onclick=async()=>{
+  const w=b.dataset.w;
+  if(armed!==w){
+    disarm();armed=w;b.textContent="Confirmer ?";
+    $("#wipeMsg").textContent="Touche à nouveau pour effacer définitivement. Annulation automatique dans 5 secondes.";
+    armTimer=setTimeout(disarm,5000);
+    return;
+  }
+  disarm();
+  const all=(w==="all");
+  if(all||w==="lots"){lots=[];await wipe("mnch_lots")}
+  if(all||w==="temps"){temps=[];await wipe("mnch_temps")}
+  if(all||w==="cools"){cools=[];await wipe("mnch_cools")}
+  if(all||w==="rec"){
+    for(const r of rec) if(r.ph) await wipe("mnch_ph_"+r.id);
+    rec=[];await wipe("mnch_rec");
+  }
+  stkUI();tmpUI();coolUI();recUI();bilUI();dashUI();
+  $("#wipeMsg").textContent="Données effacées.";
+  setTimeout(()=>{if($("#wipeMsg").textContent==="Données effacées.")$("#wipeMsg").textContent=""},3000);
 });
+
+/* ---------- navigation ---------- */
+const TITRES={dash:"",lab:"Étiquetage",stk:"Stock &amp; DLC",tmp:"Températures",
+  cool:"Refroidissement",rec:"Réception",bil:"Bilan matières",set:"Réglages"};
+function go(p){
+  document.querySelectorAll(".panel").forEach(x=>x.classList.toggle("on",x.id==="p-"+p));
+  const home=(p==="dash");
+  $("#back").hidden=home;
+  $("#hTitle").innerHTML=home?"Man'ouché <span>PMS HACCP</span>":TITRES[p];
+  if(p==="cool")coolUI();
+  if(p==="stk"){stkUI();focusScan()}
+  if(p==="tmp")tmpUI();
+  if(p==="rec")recUI();
+  if(p==="bil")bilUI();
+  if(p==="dash")dashUI();
+  window.scrollTo({top:0,behavior:"instant"});
+}
+$("#back").onclick=()=>go("dash");
+
+function tiles(){
+  const t0=dayStart(), now=Date.now();
+  const perim=lots.filter(l=>!l.out&&l.dlc<now).length;
+  const auj=lots.filter(l=>!l.out&&l.dlc>=now&&l.dlc<t0+86400000).length;
+  const stock=lots.filter(l=>!l.out).length;
+  const dus=enc.filter(e=>!temps.some(x=>x.e===e.id&&x.t>=t0)).length;
+  const hors=temps.filter(x=>{const e=enc.find(y=>y.id===x.e);
+    return e&&x.t>=t0&&(+x.v<e.min||+x.v>e.max)}).length;
+  const ouv=cools.filter(c=>!c.end).length;
+  const late=cools.filter(c=>!c.end&&(now-c.start)/60000>120).length;
+  const recM=rec.filter(r=>(r.kind||"animale")==="animale"&&!r.ph&&!r.doc&&!r.ref).length;
+  const prodJ=lots.filter(l=>l.fab>=t0);
+  const qJ=prodJ.reduce((a,l)=>a+(+l.q||0),0);
+
+  const T=[
+    {p:"lab",t:"Étiqueter",s:prodJ.length?prodJ.length+" bac"+(prodJ.length>1?"s":"")+" aujourd'hui · "+fnum(qJ)+" kg":"Aucun bac étiqueté aujourd'hui",st:""},
+    {p:"stk",t:"Stock &amp; DLC",s:perim?perim+" lot"+(perim>1?"s":"")+" périmé"+(perim>1?"s":""):(auj?auj+" à consommer aujourd'hui":stock+" lot"+(stock>1?"s":"")+" en stock"),
+      st:perim?"bad":(auj?"warn":""),n:perim||0},
+    {p:"tmp",t:"Températures",s:hors?hors+" relevé"+(hors>1?"s":"")+" hors plage":(dus?dus+" enceinte"+(dus>1?"s":"")+" à relever":"Toutes relevées"),
+      st:hors?"bad":(dus?"warn":""),n:hors||dus||0},
+    {p:"cool",t:"Refroidissement",s:late?late+" au-delà de 2 h":(ouv?ouv+" en cours":"Aucun en cours"),
+      st:late?"bad":(ouv?"warn":""),n:late||0},
+    {p:"rec",t:"Réception",s:recM?recM+" sans preuve de traçabilité":rec.filter(r=>r.t>=t0).length+" aujourd'hui",
+      st:recM?"bad":"",n:recM||0},
+    {p:"bil",t:"Bilan matières",s:"Production, pertes et consommation",st:""},
+    {p:"set",t:"Réglages",s:"Produits, enceintes, export, effacement",st:""}
+  ];
+  $("#tiles").innerHTML=T.map(x=>`<button class="tile ${x.st}" data-go="${x.p}">
+    ${x.n?`<span class="dot">${x.n}</span>`:`<span class="arw">›</span>`}
+    <span class="tt">${x.t}</span><span class="ts">${x.s}</span></button>`).join("");
+  $("#tiles").querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go));
+}
 
 /* ---------- démarrage ---------- */
 (async function(){
-  cat=await load("mnch_cat_v5",SEED);
+  cat=await load("mnch_cat_v6",SEED);
+
   cooks=await load("mnch_cooks",["JK"]);
   cook=await load("mnch_cook",cooks[0]||"");
   cools=await load("mnch_cools",[]);
@@ -864,9 +1209,12 @@ document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{
   $("#lw").value=fmt.w;$("#lh").value=fmt.h;
   document.documentElement.style.setProperty("--lw",fmt.w+"mm");
   document.documentElement.style.setProperty("--lh",fmt.h+"mm");
-  $("#today").textContent=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-  grid();list();encUI();cookUI();stkUI();tmpUI();coolUI();recUI();bar();badges();
-  setInterval(()=>{badges();if($("#p-cool").classList.contains("on"))coolUI()},60000);
+  const d=new Date();
+  $("#today").innerHTML=d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+  grid();list();encUI();cookUI();stkUI();tmpUI();coolUI();recUI();bilUI();dashUI();bar();photoLbl();
+  setInterval(()=>{
+    if($("#p-cool").classList.contains("on"))coolUI();
+    if($("#p-dash").classList.contains("on"))dashUI()},60000);
 })();
 </script>
 </body>
